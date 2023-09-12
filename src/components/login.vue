@@ -8,20 +8,32 @@
             <div class="derecha">
                 <v-img src="../assets/descarga.jpg" class="img1"></v-img>
                 <p class="text3">¡Hello! Welcome back</p>
-                <div class="app">
-                    <form @submit.prevent="iniciarSesion">
-                        <label for="usuario">Usuario:</label>
-                        <input type="text" id="usuario" v-model="usuario" required><br><br>
-            
-                        <label for="contrasena">Contraseña:</label>
-                        <input type="password" id="contrasena" v-model="contrasena" required><br><br>
-            
-                        <button type="submit">Iniciar Sesión</button>
-                    </form>
+                <div class="login">
+                    <v-form>
+                        <div>
+                            <p style="justify-content: left; display:flex; color:#504C4B; margin-bottom:2%;">Username</p>
+                        <v-text-field placeholder="Username " >
+                            <v-icon style="margin-right: 2%;">
+                                mdi mdi-account 
+                              </v-icon>
+                            </v-text-field>
+                        </div>
+                    <div class="Password">
+                        <p style="justify-content: left; display:flex; color:#504C4B; margin-bottom:2%;">Password</p>
+                        <v-text-field type="password" placeholder="Password" >
+                            <v-icon style="margin-right: 2%;">
+                                mdi mdi-lock
+                              </v-icon>
+                            </v-text-field>
+                    </div>
+                    <v-checkbox label="Remember me" style="margin-top: -7%; margin-bottom:-8%; color:black; font-size: 90%;"></v-checkbox>
+                        <v-btn type="submit" block class="mt-2" style=" background-color:#5C7CF2; color:white;">Login</v-btn>
+                        
+                    </v-form>
                 </div>
             </div>
         </div>
-        
+
     </responsive>
 </template>
 
@@ -55,10 +67,11 @@ body {
     height: 750px;
     background: linear-gradient(90deg, #6383FA 50%, #fff 50%);
     text-align: center;
-    position:fixed;
+    position: fixed;
     margin-top: 4%;
     margin-left: -31.8%;
     border-radius: 6%;
+  
 }
 
 .izquierda {
@@ -82,7 +95,8 @@ body {
     line-height: 1;
 
 }
-.text2{
+
+.text2 {
     color: white;
     font-family: var(--primary-font);
     font-size: 150%;
@@ -92,23 +106,40 @@ body {
     float: right;
     width: 50%;
     height: 100%;
-    
+
 }
-.img1{
+
+.img1 {
     height: 11%;
     width: 13%;
     margin-left: 44%;
     margin-top: 12%;
-   border-radius: 10%;
+    border-radius: 10%;
     box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.5);
 }
-.text3{
+
+.text3 {
     color: rgb(0, 0, 0);
     font-family: var(--primary-font);
-    font-size: clamp(20px,2vw,22px);
+    font-size: clamp(20px, 2vw, 22px);
     margin-top: 5%;
 }
-.app{
-    margin-top: 10%;
+
+
+.login{
+    height: 45%;
+    width: 70%;
+    margin: 0 auto;
+    background-color: transparent;
+    color: #5C7CF2;
+    margin-top: 4%;
 }
+label, input{
+    float: left;
+    
+}
+
+
+
+
 </style>
