@@ -6,17 +6,15 @@ import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 
 export default createVuetify({
-  theme:{
-    themes:{
-      light:{
+  theme: {
+    themes: {
+      light: {
         dark: false,
-        colors:{
-          primary:"#6383FA",
-          secondary:"",
-
+        colors: {
+          primary: '#6383fa',
+          secondary: '#FFCDD2'
         }
-      }
-    }
-  }
-}
-)
+      },
+    },
+  },
+})

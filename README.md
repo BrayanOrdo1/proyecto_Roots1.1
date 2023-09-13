@@ -1,4 +1,4 @@
-# proyecto_vue_final_1.2
+# tuto_vuetify
 
 ## Project setup
 ```
