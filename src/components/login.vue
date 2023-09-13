@@ -1,5 +1,5 @@
 <template>
-    <responsive>
+    <div id="todo">
         <div class="Center">
             <div class="izquierda ">
                 <h1 class="tex1">Advanture <br> Start here</h1>
@@ -33,8 +33,7 @@
                 </div>
             </div>
         </div>
-
-    </responsive>
+    </div>
 </template>
 
 <script>
@@ -51,15 +50,11 @@ export default {
 
 
 <style>
-body {
-    margin: 0;
-    padding: 0;
+#todo {
     min-height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
     background: linear-gradient(90deg, #5C7CF2 50%, #e2e6f0 50%);
-    position: relative;
 }
 
 .Center {
@@ -67,9 +62,8 @@ body {
     height: 750px;
     background: linear-gradient(90deg, #6383FA 50%, #fff 50%);
     text-align: center;
-    position: fixed;
+    position: absolute;
     margin-top: 4%;
-    margin-left: -31.8%;
     border-radius: 6%;
   
 }
@@ -78,6 +72,7 @@ body {
     background-image: url(../assets/Brayanasdhsdefsa.png);
     float: left;
     background-size: 100% 100%;
+    position: relative;
     text-align: center;
     width: 50%;
     height: 100%;
@@ -106,7 +101,7 @@ body {
     float: right;
     width: 50%;
     height: 100%;
-
+    position: relative;
 }
 
 .img1 {
@@ -138,8 +133,4 @@ label, input{
     float: left;
     
 }
-
-
-
-
 </style>

@@ -22,6 +22,7 @@
           <v-list-item prepend-icon="mdi mdi-package-variant-closed" title="Inventario" value="Inventory" ></v-list-item>
           <v-list-item prepend-icon="mdi mdi-account-group" title="Clientes" value="clientes" router-link to="/clientes"></v-list-item>
           <v-list-item prepend-icon="mdi mdi-account-circle" title="Perfiles" value="profiles"></v-list-item>
+          <v-list-item prepend-icon="mdi mdi-account-circle" title="login" value="profiles" router-link to="/login"></v-list-item>
         </v-list>
       </v-navigation-drawer>
       <v-main  style="display:block;height: 100%;"><router-view/></v-main>
@@ -30,13 +31,13 @@
 </template>
 
 <script>
-// import Add_cliente from './components/form_cli.vue'
+// import login_1 from './components/login.vue'
 
 export default {
   name: 'App',
 
   components: {
-    // Add_cliente
+    // login_1
   },
 
   data() {
