@@ -12,23 +12,25 @@
                     <v-form>
                         <div>
                             <p style="justify-content: left; display:flex; color:#504C4B; margin-bottom:2%;">Username</p>
-                        <v-text-field placeholder="Username " >
-                            <v-icon style="margin-right: 2%;">
-                                mdi mdi-account 
-                              </v-icon>
+                            <v-text-field placeholder="Username ">
+                                <v-icon style="margin-right: 2%;">
+                                    mdi mdi-account
+                                </v-icon>
                             </v-text-field>
                         </div>
-                    <div class="Password">
-                        <p style="justify-content: left; display:flex; color:#504C4B; margin-bottom:2%;">Password</p>
-                        <v-text-field type="password" placeholder="Password" >
-                            <v-icon style="margin-right: 2%;">
-                                mdi mdi-lock
-                              </v-icon>
+                        <div class="Password">
+                            <p style="justify-content: left; display:flex; color:#504C4B; margin-bottom:2%;">Password</p>
+                            <v-text-field type="password" placeholder="Password">
+                                <v-icon style="margin-right: 2%;">
+                                    mdi mdi-lock
+                                </v-icon>
                             </v-text-field>
-                    </div>
-                    <v-checkbox label="Remember me" style="margin-top: -7%; margin-bottom:-8%; color:black; font-size: 90%;"></v-checkbox>
-                        <v-btn type="submit" block class="mt-2" style=" background-color:#5C7CF2; color:white;">Login</v-btn>
-                        
+                        </div>
+                        <v-checkbox label="Remember me"
+                            style="margin-top: -7%; margin-bottom:-8%; color:black; font-size: 90%;"></v-checkbox>
+                        <v-btn type="submit" block class="mt-2" style=" background-color:#5C7CF2; color:white;"
+                        @click="menu">Login</v-btn>
+
                     </v-form>
                 </div>
             </div>
@@ -41,8 +43,12 @@ export default {
     name: "login_1",
     data() {
         return {
-            mostrarDiv: false // Cambia esto a false para ocultar la div
         };
+    },
+    methods: {
+        menu() {
+            this.$router.push({ name: 'menu' });
+        }
     }
 }
 
@@ -65,7 +71,7 @@ export default {
     position: absolute;
     margin-top: 4%;
     border-radius: 6%;
-  
+
 }
 
 .izquierda {
@@ -121,7 +127,7 @@ export default {
 }
 
 
-.login{
+.login {
     height: 45%;
     width: 70%;
     margin: 0 auto;
@@ -129,8 +135,10 @@ export default {
     color: #5C7CF2;
     margin-top: 4%;
 }
-label, input{
+
+label,
+input {
     float: left;
-    
+
 }
 </style>

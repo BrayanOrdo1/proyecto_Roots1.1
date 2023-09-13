@@ -2,7 +2,7 @@
     <v-card color="primary" class="pa-8 d-flex justify-center flex-wrap">
         <v-responsive max-width="550">
 
-            <v-autocomplete :item="item" auto-select-first class="flex-full-width" density="comfortable" item-props
+            <v-autocomplete :items="items" auto-select-first class="flex-full-width" density="comfortable" items-props
                 menu-icon="" placeholder="Depatamento, ciudad o cliente por buscar" prepend-inner-icon="mdi-magnify" rounded
                 theme="light" variant="solo"></v-autocomplete>
         </v-responsive>
@@ -11,16 +11,14 @@
         <div id="left">
             <div class="left">
                 <v-select style="margin:0 auto;margin-top: 15px;width: 90%;" clearable label="Departamentos"
-                    :item="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']" variant="outlined">
+                    :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']" variant="outlined">
                 </v-select>
                 <v-select style="margin:0 auto;width: 90%;" clearable label="Ciudad"
-                    :item="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']" variant="outlined">
+                    :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']" variant="outlined">
                 </v-select>
-                <v-responsive>
                 <v-btn @click="openAgregarDialog" id="btn" append-icon="mdi mdi-account-plus" variant="outlined">
                     Agregar cliente
                 </v-btn>
-                </v-responsive>
             </div>
         </div>
         <div id="right">
@@ -45,16 +43,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="item in desserts" :key="item.code">
-                                <td>{{ item.code }}</td>
-                                <td>{{ item.name }}</td>
-                                <td>{{ item.country }}</td>
-                                <td>{{ item.cell }}</td>
-                                <td>{{ item.direccion }}</td>
-                                <td>{{ item.nombreAlmacen }}</td>
+                            <tr v-for="items in desserts" :key="items.code">
+                                <td>{{ items.code }}</td>
+                                <td>{{ items.name }}</td>
+                                <td>{{ items.country }}</td>
+                                <td>{{ items.cell }}</td>
+                                <td>{{ items.direccion }}</td>
+                                <td>{{ items.nombreAlmacen }}</td>
                                 <td>
-                                    <v-icon style="margin-left: 20px;" icon="mdi mdi-pencil" @click="openEditarDialog(item)"></v-icon>
-                                    <v-icon @click="confirmEliminar(item)" icon="mdi mdi-delete-empty"></v-icon>
+                                    <v-icon style="margin-left: 20px;" icon="mdi mdi-pencil" @click="openEditarDialog(items)"></v-icon>
+                                    <v-icon @click="confirmEliminar(items)" icon="mdi mdi-delete-empty"></v-icon>
                                 </td>
                             </tr>
                         </tbody>
@@ -88,12 +86,12 @@
             <v-card-title>agregar</v-card-title>
             <v-card-text>
                 <v-form @submit.prevent="editarCliente">
-                    <v-text-field v-model="editeDcodigo" label="id"> </v-text-field>
-                    <v-text-field v-model="editeDnombre" label="nombre"> </v-text-field>
-                    <v-text-field v-model="editeDciudad" label="direccion"> </v-text-field>
-                    <v-text-field v-model="editeDtelefono" label="telefono"> </v-text-field>
-                    <v-text-field v-model="editeDdireccion" label="direccion_almacen"> </v-text-field>
-                    <v-text-field v-model="editeDnombreAlmacen" label="nombre_almacen"> </v-text-field>
+                    <v-text-field v-model="codigo" label="id"> </v-text-field>
+                    <v-text-field v-model="nombre" label="nombre"> </v-text-field>
+                    <v-text-field v-model="ciudad" label="direccion"> </v-text-field>
+                    <v-text-field v-model="telefono" label="telefono"> </v-text-field>
+                    <v-text-field v-model="direccion_almacen" label="direccion_almacen"> </v-text-field>
+                    <v-text-field v-model="nombre_almacen" label="nombre_almacen"> </v-text-field>
                     <v-btn type="submit" color="primary">Realizar Cambio</v-btn>
                 </v-form>
             </v-card-text>
@@ -128,9 +126,9 @@ export default {
         }
     },
     methods: {
-        confirmEliminar(item) {
+        confirmEliminar(items) {
             if (window.confirm('¿Estás seguro de que deseas eliminar este cliente?')) {
-                const index = this.desserts.indexOf(item);
+                const index = this.desserts.indexOf(items);
                 if (index !== -1) {
                     this.desserts.splice(index, 1)
                 }
@@ -141,27 +139,27 @@ export default {
             this.agregarDialog = true
         },
 
-        openEditarDialog(item) {
-            this.selectedItem = { ...item };
-            this.editeDcodigo = item.code
-            this.editeDnombre = item.name
-            this.editeDciudad = item.country
-            this.editeDtelefono = item.cell
-            this.editeDdireccion = item.direccion
-            this.editeDnombreAlmacen = item.nombreAlmacen
+        openEditarDialog(items) {
+            this.selectedItem = { ...items };
+            this.editeDcodigo = items.code
+            this.editeDnombre = items.name
+            this.editeDciudad = items.country
+            this.editeDtelefono = items.cell
+            this.editeDdireccion = items.direccion
+            this.editeDnombreAlmacen = items.nombreAlmacen
             this.editarDialog = true
         },
 
         editarCliente() {
-            const index = this.desserts.findIndex(item => item.code === this.selectedItem.code);
+            const index = this.desserts.findIndex(items => items.code === this.selectedItem.code);
 
             if (index !== 1) {
                 this.desserts[index].code = this.editeDcodigo
-                this.desserts[index].name = this.editeDnombre
-                this.desserts[index].country = this.editeDciudad
-                this.desserts[index].cell = this.editeDtelefono
-                this.desserts[index].direccion = this.editeDdireccion
-                this.desserts[index].nombreAlmacen = this.editeDnombreAlmacen
+                this.desserts[index].code = this.editeDnombre
+                this.desserts[index].code = this.editeDciudad
+                this.desserts[index].code = this.editeDtelefono
+                this.desserts[index].code = this.editeDdireccion
+                this.desserts[index].code = this.editeDnombreAlmacen
 
                 this.editarDialog = false;
 
@@ -181,17 +179,8 @@ export default {
             this.nombre = ''
             this.ciudad = ''
             this.telefono = ''
-            this.direccion_almacen = ''
-            this.nombre_almacen = ''
-        },
-        closeeditarDialog() {
-            this.editarDialog = false;
-            this.editeDcodigo = ''
-            this.editeDnombre = ''
-            this.editeDciudad = ''
-            this.editeDtelefono = ''
-            this.editeDdireccion = ''
-            this.editeDnombreAlmacen = ''
+            this.direccion = ''
+            this.nombrelmacen = ''
         },
 
         AgregarCliente() {
@@ -228,7 +217,6 @@ export default {
     border: 1px solid;
     margin-top: 2%;
     margin-bottom: 5.5%;
-    position: relative;
 }
 
 #left {
@@ -238,7 +226,6 @@ export default {
     margin-top: 2%;
     margin-bottom: 2%;
     margin-right: 80%;
-    position: absolute;
 }
 
 .left {
@@ -248,15 +235,14 @@ export default {
 
 #btn {
     position: relative;
-    margin-top: 420px;
-    margin-left: 50px;
+    top: 430px;
+    left: 35px;
 }
 
 #right {
     width: 70%;
     margin-left: 25%;
-    margin-top: 2%;
-    position: absolute;
+    margin-top: -45.5%;
 }
 
 .right {
