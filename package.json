@@ -1,5 +1,5 @@
 {
-  "name": "tuto_vuetify",
+  "name": "proyecto_vue_final_1.2",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,7 +10,9 @@
   "dependencies": {
     "@mdi/font": "5.9.55",
     "core-js": "^3.8.3",
+    "firebase": "^10.3.1",
     "roboto-fontface": "*",
+    "tuto_vuetify": "github:BrayanOrdo1/proyecto_Roots1.1",
     "vue": "^3.2.13",
     "vue-router": "^4.2.4",
     "vuetify": "^3.0.0-beta.0",
