@@ -28,9 +28,8 @@
                         </div>
                         <v-checkbox label="Remember me"
                             style="margin-top: -7%; margin-bottom:-8%; color:black; font-size: 90%;"></v-checkbox>
-                        <v-btn type="submit" block class="mt-2" style=" background-color:#5C7CF2; color:white;"
-                        @click="menu">Login</v-btn>
-
+                        <v-btn type="submit" block class="mt-2" @click="cliente"
+                            style=" background-color:#5C7CF2; color:white;">login</v-btn>
                     </v-form>
                 </div>
             </div>
@@ -43,21 +42,23 @@ export default {
     name: "login_1",
     data() {
         return {
+            mostrarDiv: false,
         };
     },
     methods: {
-        menu() {
-            this.$router.push({ name: 'menu' });
-        }
+    cliente() {
+      // Aquí puedes realizar cualquier lógica adicional antes de la navegación
+      // (por ejemplo, comprobar requisitos)
+      // Luego, utiliza router.push() para navegar a la ruta de ComponenteB
+      this.$router.push({ name: 'main' });
     }
+  }
 }
-
 </script>
-
 
 <style>
 #todo {
-    min-height: 100vh;
+    height: 975px;
     display: flex;
     justify-content: center;
     background: linear-gradient(90deg, #5C7CF2 50%, #e2e6f0 50%);
@@ -67,23 +68,20 @@ export default {
     width: 1210px;
     height: 750px;
     background: linear-gradient(90deg, #6383FA 50%, #fff 50%);
+    position: relative;
     text-align: center;
-    position: absolute;
-    margin-top: 4%;
+    margin-top: 5%;
     border-radius: 6%;
-
 }
 
 .izquierda {
     background-image: url(../assets/Brayanasdhsdefsa.png);
     float: left;
     background-size: 100% 100%;
-    position: relative;
     text-align: center;
     width: 50%;
     height: 100%;
     border-radius: 6%;
-
 }
 
 .tex1 {
@@ -94,7 +92,6 @@ export default {
     font-style: normal;
     text-shadow: #fff;
     line-height: 1;
-
 }
 
 .text2 {
@@ -107,7 +104,6 @@ export default {
     float: right;
     width: 50%;
     height: 100%;
-    position: relative;
 }
 
 .img1 {
@@ -126,7 +122,6 @@ export default {
     margin-top: 5%;
 }
 
-
 .login {
     height: 45%;
     width: 70%;
@@ -134,11 +129,5 @@ export default {
     background-color: transparent;
     color: #5C7CF2;
     margin-top: 4%;
-}
-
-label,
-input {
-    float: left;
-
 }
 </style>
