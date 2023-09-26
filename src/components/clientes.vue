@@ -2,7 +2,7 @@
     <v-card color="primary" class="pa-8 d-flex justify-center flex-wrap">
         <v-responsive max-width="550">
 
-            <v-autocomplete :item="item" auto-select-first class="flex-full-width" density="comfortable" item-props
+            <v-autocomplete :item="items" auto-select-first class="flex-full-width" density="comfortable" item-props
                 menu-icon="" placeholder="Depatamento, ciudad o cliente por buscar" prepend-inner-icon="mdi-magnify" rounded
                 theme="light" variant="solo"></v-autocomplete>
         </v-responsive>
@@ -11,212 +11,288 @@
         <div id="left">
             <div class="left">
                 <v-select style="margin:0 auto;margin-top: 15px;width: 90%;" clearable label="Departamentos"
-                    :item="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']" variant="outlined">
+                    :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']" variant="outlined">
                 </v-select>
                 <v-select style="margin:0 auto;width: 90%;" clearable label="Ciudad"
-                    :item="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']" variant="outlined">
+                    :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']" variant="outlined">
                 </v-select>
-                <v-responsive>
-                <v-btn @click="openAgregarDialog" id="btn" append-icon="mdi mdi-account-plus" variant="outlined">
-                    Agregar cliente
-                </v-btn>
-                </v-responsive>
+                <v-dialog v-model="dialog">
+                    <template v-slot:activator="{ props }">
+                        <v-btn id="btn" v-bind="props" style="border-radius: 9999px; border-width: 1px;">+ agregar cliente
+                        </v-btn>
+                    </template>
+                    <v-card-title>
+                        <span class="text-h5">{{ formTitle }}</span>
+                    </v-card-title>
+                </v-dialog>
             </div>
         </div>
         <div id="right">
             <div class="right">
-                <v-card class="mx-auto" style="text-align: center;" max-width="1100">
+                <v-card class="mx-auto" style="text-align: center;" max-width="1200">
                     <v-card-title>
                         Lista de clientes
                     </v-card-title>
-
                     <v-divider></v-divider>
+                    <v-data-table :headers="headers" :items="desserts" :sort-by="[{ order: 'asc' }]" class="elevation-1"
+                        style="height: 600px;">
+                        <template v-slot:top>
+                            <v-dialog v-model="dialog">
+                                <v-card>
+                                    <v-card-text>
+                                        <v-container>
+                                            <v-row>
+                                                <v-col cols="12" sm="6" md="4">
+                                                    <v-text-field v-model="editedItem.id" label="Codigo"></v-text-field>
+                                                </v-col>
+                                                <v-col cols="12" sm="6" md="4">
+                                                    <v-text-field v-model="editedItem.nombre" label="Nombre"></v-text-field>
+                                                </v-col>
+                                                <v-col cols="12" sm="6" md="4">
+                                                    <v-text-field v-model="editedItem.telefono"
+                                                        label="Telefono"></v-text-field>
+                                                </v-col>
+                                                <v-col cols="12" sm="6" md="4">
+                                                    <v-text-field v-model="editedItem.ciudad" label="Ciudad"></v-text-field>
+                                                </v-col>
+                                                <v-col cols="12" sm="6" md="4">
+                                                    <v-text-field v-model="editedItem.direccionalmacen"
+                                                        label="Direccion almacen"></v-text-field>
+                                                </v-col>
+                                                <v-col cols="12" sm="6" md="4">
+                                                    <v-text-field v-model="editedItem.nombrealmacen"
+                                                        label="Nombre almacen"></v-text-field>
+                                                </v-col>
+                                            </v-row>
+                                        </v-container>
+                                    </v-card-text>
 
-                    <v-table style="margin-left: 5%;margin-right: 5% ;height: 600px;">
-                        <thead>
-                            <tr>
-                                <th style="text-align: center;">Codigo</th>
-                                <th style="text-align: center;">Nombre</th>
-                                <th style="text-align: center;">Ciudad</th>
-                                <th style="text-align: center;">Telefono</th>
-                                <th style="text-align: center;">Direccion almacen</th>
-                                <th style="text-align: center;">Nombre almacen</th>
-                                <th style="text-align: center;">Edicion</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="item in desserts" :key="item.code">
-                                <td>{{ item.code }}</td>
-                                <td>{{ item.name }}</td>
-                                <td>{{ item.country }}</td>
-                                <td>{{ item.cell }}</td>
-                                <td>{{ item.direccion }}</td>
-                                <td>{{ item.nombreAlmacen }}</td>
-                                <td>
-                                    <v-icon style="margin-left: 20px;" icon="mdi mdi-pencil" @click="openEditarDialog(item)"></v-icon>
-                                    <v-icon @click="confirmEliminar(item)" icon="mdi mdi-delete-empty"></v-icon>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </v-table>
+                                    <v-card-actions> 
+                                        <v-spacer></v-spacer>
+                                        <v-btn color="blue-darken-1" variant="text" @click="close">Cancel</v-btn>
+                                        <v-btn color="blue-darken-1" variant="text" @click="save">Save</v-btn>
+                                    </v-card-actions>
+                                </v-card>
+                            </v-dialog>
+                            <v-dialog v-model="dialogDelete" max-width="500px">
+                                <v-card>
+                                    <v-card-title class="text-h5" style="border-radius: 100px; text-align: center;">Estas seguro de liminar este cliente?</v-card-title>
+                                    <v-card-actions>
+                                        <v-spacer></v-spacer>
+                                        <v-btn color="blue-darken-1" variant="text" @click="closeDelete">Cancel</v-btn>
+                                        <v-btn color="blue-darken-1" variant="text" @click="deleteItemConfirm">OK</v-btn>
+                                        <v-spacer></v-spacer>
+                                    </v-card-actions>
+                                </v-card>
+                            </v-dialog>
+                        </template>
+
+                        <template v-slot:[`item.actions`]="{ item }">
+                            <v-icon size="small" class="me-2" @click="editItem(item.raw)">
+                                mdi-pencil
+                            </v-icon>
+                            <v-icon size="small" @click="deleteItem(item.raw)">
+                                mdi-delete
+                            </v-icon>
+                        </template>
+                        <template v-slot:no-data>
+                        </template>
+                    </v-data-table>
                 </v-card>
             </div>
         </div>
     </div>
-    <v-dialog v-model="agregarDialog" max-width="500">
-        <v-card>
-            <v-card-title>agregar</v-card-title>
-            <v-card-text>
-                <v-form @submit.prevent="AgregarCliente">
-                    <v-text-field v-model="codigo" label="id"> </v-text-field>
-                    <v-text-field v-model="nombre" label="nombre"> </v-text-field>
-                    <v-text-field v-model="ciudad" label="direccion"> </v-text-field>
-                    <v-text-field v-model="telefono" label="telefono"> </v-text-field>
-                    <v-text-field v-model="direccion_almacen" label="direccion_almacen"> </v-text-field>
-                    <v-text-field v-model="nombre_almacen" label="nombre_almacen"> </v-text-field>
-                    <v-btn type="submit" color="primary">Add</v-btn>
-                </v-form>
-            </v-card-text>
-            <v-card-actions>
-                <v-btn @click="closeAgregarDialog">cerrar</v-btn>
-            </v-card-actions>
-        </v-card>
-    </v-dialog>
-
-    <v-dialog v-model="editarDialog" max-width="500">
-        <v-card>
-            <v-card-title>agregar</v-card-title>
-            <v-card-text>
-                <v-form @submit.prevent="editarCliente">
-                    <v-text-field v-model="editeDcodigo" label="id"> </v-text-field>
-                    <v-text-field v-model="editeDnombre" label="nombre"> </v-text-field>
-                    <v-text-field v-model="editeDciudad" label="direccion"> </v-text-field>
-                    <v-text-field v-model="editeDtelefono" label="telefono"> </v-text-field>
-                    <v-text-field v-model="editeDdireccion" label="direccion_almacen"> </v-text-field>
-                    <v-text-field v-model="editeDnombreAlmacen" label="nombre_almacen"> </v-text-field>
-                    <v-btn type="submit" color="primary">Realizar Cambio</v-btn>
-                </v-form>
-            </v-card-text>
-            <v-card-actions>
-                <v-btn @click="closeeditarDialog">cerrar</v-btn>
-            </v-card-actions>
-        </v-card>
-    </v-dialog>
 </template>
 <script>
+import db from '../firebase/init.js'
+import { collection, getDocs, query, addDoc, doc, updateDoc, deleteDoc } from 'firebase/firestore'
+
 export default {
-    name: 'cli_1',
-    data() {
-        return {
-            desserts: [
-            ],
-            agregarDialog: false,
-            codigo: '',
-            nombre: '',
-            ciudad: '',
-            telefono: '',
-            direccion_almacen: '',
-            nombre_almacen: '',
-            editarDialog: false,
-            editeDcodigo: '',
-            editeDnombre: '',
-            editeDciudad: '',
-            editeDtelefono: '',
-            editeDdireccion: '',
-            editeDnombreAlmacen: '',
-            selectedItem: null,
-        }
+    name: 'Producto_1',
+    data: () => ({
+        dialog: false,
+        dialogDelete: false,
+        headers: [
+            {
+                align: 'start',
+                sortable: false,
+                key: 'name',
+            },
+            { title: 'Codigo', key: 'id' },
+            { title: 'Nombre', key: 'nombre' },
+            { title: 'Telefono', key: 'telefono' },
+            { title: 'Ciudad', key: 'ciudad' },
+            { title: 'Direccion almace', key: 'direccionalmacen' },
+            { title: 'Nombre almacen', key: 'nombrealmacen', sortable: false },
+            { title: 'Actions', key: 'actions', sortable: false },
+        ],
+        desserts: [],
+        editedIndex: -1,
+        editedItem: {
+            id: ' ',
+            nombre: ' ',
+            telefono: ' ',
+            ciudad: ' ',
+            direccionalmacen: ' ',
+            nombrealmacen: ' ',
+        },
+        defaultItem: {
+            id: ' ',
+            nombre: ' ',
+            telefono: ' ',
+            ciudad: ' ',
+            direccionalmacen: ' ',
+            nombrealmacen: ' ',
+        },
+    }),
+
+    computed: {
+        formTitle() {
+            return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+        },
     },
+
+    watch: {
+        dialog(val) {
+            val || this.close()
+        },
+        dialogDelete(val) {
+            val || this.closeDelete()
+        },
+    },
+
+    created() {
+        this.listarProducto()
+    },
+
     methods: {
-        confirmEliminar(item) {
-            if (window.confirm('¿Estás seguro de que deseas eliminar este cliente?')) {
-                const index = this.desserts.indexOf(item);
-                if (index !== -1) {
-                    this.desserts.splice(index, 1)
-                }
+        async listarProducto() {
+            const q = query(collection(db, "cliente"));
+            const resul = await getDocs(q);
+            resul.forEach((doc) => {
+                console.log("id", doc.id);
+                this.desserts.push({
+                    keyid: doc.id,
+                    id: doc.data().id,
+                    nombre: doc.data().nombre,
+                    telefono: doc.data().telefono,
+                    ciudad: doc.data().ciudad,
+                    direccionalmacen: doc.data().direccionalmacen,
+                    nombrealmacen: doc.data().nombrealmacen,
+                })
+            })
+        },
+
+        async Eliminarcliente() {
+            console.log(this.editedItem.keyid)
+            const Ref = doc(db, "cliente", this.editedItem.keyid);
+            await deleteDoc(Ref, {
+                nombre: this.editedItem.nombre,
+                telefono: this.editedItem.telefono,
+                ciudad: this.editedItem.ciudad,
+                direccionalmacen: this.editedItem.direccionalmacen,
+                nombrealmacen: this.editedItem.nombrealmacen,
+            })
+                .then(console.log("Eliminado con exito"))
+                .catch(function (error) {
+                    console.log(error)
+                })
+        },
+
+
+        async Actualizarcliente() {
+            console.log("hola", this.editedItem.keyid)
+            const Ref = doc(db, "cliente", this.editedItem.keyid);
+            await updateDoc(Ref, {
+                nombre: this.editedItem.nombre,
+                telefono: this.editedItem.telefono,
+                ciudad: this.editedItem.ciudad,
+                direccionalmacen: this.editedItem.direccionalmacen,
+                nombrealmacen: this.editedItem.nombrealmacen,
+            })
+                .then(console.log("Termino update usuario"))
+                .catch(function (error) {
+                    console.log(error)
+
+                });
+        },
+
+        async createUser() {
+            const colRef = collection(db, 'cliente');
+            const dataObj = {
+                id: this.editedItem.id,
+                nombre: this.editedItem.nombre,
+                telefono: this.editedItem.telefono,
+                ciudad: this.editedItem.ciudad,
+                direccionalmacen: this.editedItem.direccionalmacen,
+                nombrealmacen: this.editedItem.nombrealmacen,
             }
+            const docRef = await addDoc(colRef, dataObj)
+            console.log('Document was created with: ID:', docRef.id)
         },
 
-        openAgregarDialog() {
-            this.agregarDialog = true
+
+
+        initialize() {
+            this.desserts = [
+                {
+                    id: ' ',
+                    nombre: ' ',
+                    telefono: ' ',
+                    ciudad: ' ',
+                    direccionalmacen: ' ',
+                    nombrealmacen: ' ',
+                },
+
+            ]
         },
 
-        openEditarDialog(item) {
-            this.selectedItem = { ...item };
-            this.editeDcodigo = item.code
-            this.editeDnombre = item.name
-            this.editeDciudad = item.country
-            this.editeDtelefono = item.cell
-            this.editeDdireccion = item.direccion
-            this.editeDnombreAlmacen = item.nombreAlmacen
-            this.editarDialog = true
+        editItem(item) {
+            this.editedIndex = this.desserts.indexOf(item)
+            this.editedItem = Object.assign({}, item)
+            this.dialog = true
         },
 
-        editarCliente() {
-            const index = this.desserts.findIndex(item => item.code === this.selectedItem.code);
+        deleteItem(item) {
+            this.editedIndex = this.desserts.indexOf(item)
+            this.editedItem = Object.assign({}, item)
+            this.dialogDelete = true
+        },
 
-            if (index !== 1) {
-                this.desserts[index].code = this.editeDcodigo
-                this.desserts[index].name = this.editeDnombre
-                this.desserts[index].country = this.editeDciudad
-                this.desserts[index].cell = this.editeDtelefono
-                this.desserts[index].direccion = this.editeDdireccion
-                this.desserts[index].nombreAlmacen = this.editeDnombreAlmacen
+        deleteItemConfirm() {
+            this.desserts.splice(this.editedIndex, 1)
+            this.closeDelete()
+            this.Eliminarcliente()
+        },
 
-                this.editarDialog = false;
+        close() {
+            this.dialog = false
+            this.$nextTick(() => {
+                this.editedItem = Object.assign({}, this.defaultItem)
+                this.editedIndex = -1
+            })
+        },
 
-                this.selectedItem = null
-                this.editeDcodigo = ''
-                this.editeDnombre = ''
-                this.editeDciudad = ''
-                this.editeDtelefono = ''
-                this.editeDdireccion = ''
-                this.editeDnombreAlmacen = ''
+        closeDelete() {
+            this.dialogDelete = false
+            this.$nextTick(() => {
+                this.editedItem = Object.assign({}, this.defaultItem)
+                this.editedIndex = -1
+            })
+        },
+
+        save() {
+            if (this.editedIndex > -1) {
+                Object.assign(this.desserts[this.editedIndex], this.editedItem)
+                this.Actualizarcliente()
+            } else {
+                this.desserts.push(this.editedItem),
+                    this.createUser()
+
             }
+            this.close()
         },
-
-        closeAgregarDialog() {
-            this.agregarDialog = false;
-            this.codigo = ''
-            this.nombre = ''
-            this.ciudad = ''
-            this.telefono = ''
-            this.direccion_almacen = ''
-            this.nombre_almacen = ''
-        },
-        closeeditarDialog() {
-            this.editarDialog = false;
-            this.editeDcodigo = ''
-            this.editeDnombre = ''
-            this.editeDciudad = ''
-            this.editeDtelefono = ''
-            this.editeDdireccion = ''
-            this.editeDnombreAlmacen = ''
-        },
-
-        AgregarCliente() {
-            if (
-                this.codigo.trim() === '' ||
-                this.nombre.trim() === '' ||
-                this.ciudad.trim() === '' ||
-                this.telefono.trim() === '' ||
-                this.direccion_almacen.trim() === '' ||
-                this.nombre_almacen.trim() === ''
-            ) {
-                alert('por favor, igresa los campos');
-                return;
-            }
-            this.desserts.push({
-                code: this.codigo,
-                name: this.nombre,
-                country: this.ciudad,
-                cell: this.telefono,
-                direccion: this.direccion_almacen,
-                nombreAlmacen: this.nombre_almacen,
-            });
-            this.closeAgregarDialog()
-        }
-    }
+    },
 }
 
 </script>
