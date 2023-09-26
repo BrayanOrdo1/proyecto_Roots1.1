@@ -1,9 +1,9 @@
-<template>
+<!-- <template>
     <div class="SuperDiv">
 
         <div class="Div45">
             <v-btn class="btn">
-                Buttonn
+                Button
               </v-btn>
             <v-responsive max-width="300" class="btn1">
                 <v-autocomplete
@@ -63,7 +63,7 @@
 </template>
 <script>
 export default {
-    name: 'Tikets',
+    name: 'Tickets_1',
 
     data: () => ({
 
@@ -133,4 +133,4 @@ margin-top: 1.5%;
 }
 
 </style>
-  
+   -->
