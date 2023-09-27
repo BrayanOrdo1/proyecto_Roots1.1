@@ -2,9 +2,15 @@
     <div class="SuperDiv">
 
         <div class="Div45">
-            <v-btn class="btn">
-                Buttonn
-            </v-btn>
+            <v-dialog v-model="dialog">
+                <template v-slot:activator="{ props }">
+                    <v-btn id="btn" v-bind="props" style="border-radius: 9999px; border-width: 1px;">+ agregar cliente
+                    </v-btn>
+                </template>
+                <v-card-title>
+                    <span class="text-h5">{{ formTitle }}</span>
+                </v-card-title>
+            </v-dialog>
             <v-responsive max-width="300" class="btn1">
                 <v-autocomplete :items="items" auto-select-first class="flex-full-width" density="comfortable" item-props
                     menu-icon="" placeholder="Search Google or type a URL" prepend-inner-icon="mdi-magnify" rounded
@@ -44,32 +50,234 @@
                 </div>
 
             </div>
-
+            
+            <v-card-text>
+                <v-container>
+                    <v-row>
+                        <v-col cols="12" sm="6" md="4">
+                            <v-text-field v-model="editedItem.iTikets" label="Codigo"></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
+                            <v-text-field v-model="editedItem.iOrden" label="Nombre"></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
+                            <v-text-field v-model="editedItem.iCli"
+                                label="Telefono"></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
+                            <v-text-field v-model="editedItem.iRef" label="Ciudad"></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
+                            <v-text-field v-model="editedItem.iProce"
+                                label="Direccion almacen"></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
+                            <v-text-field v-model="editedItem.iColor"
+                                label="Nombre almacen"></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
+                            <v-text-field v-model="editedItem.iPares"
+                                label="Nombre almacen"></v-text-field>
+                        </v-col>
+                    </v-row>
+                </v-container>
+            </v-card-text>
             
         
         </div>
     </div>
 </template>
 <script>
+import db from '../firebase/init.js'
+import { collection, getDocs, query, addDoc, doc, updateDoc, deleteDoc } from 'firebase/firestore'
+
 export default {
-    name: 'Tikets_1',
-    data() {
-        return {
-            iTikets: "71",
-            iOrden: "0175",
-            iCli: "BRAYAN ORDOÑEZ B/MANGA ",
-            iRef: "103",
-            iProce: "COSTURA",
-            iColor: "MARRON X BEIGE X ROSA",
-            iFlecha: "Flecha",
-            iPares: "13"
-            
-        }
+    name: 'Producto_1',
+    data: () => ({
+        dialog: false,
+        dialogDelete: false,
+        headers: [
+            {
+                align: 'start',
+                sortable: false,
+                key: 'name',
+            },
+            { title: 'Codigo', key: 'id' },
+            { title: 'Nombre', key: 'nombre' },
+            { title: 'Telefono', key: 'telefono' },
+            { title: 'Ciudad', key: 'ciudad' },
+            { title: 'Direccion almace', key: 'direccionalmacen' },
+            { title: 'Nombre almacen', key: 'nombrealmacen', sortable: false },
+            { title: 'Actions', key: 'actions', sortable: false },
+        ],
+        desserts: [],
+        editedIndex: -1,
+        editedItem: {
+            id: ' ',
+            nombre: ' ',
+            telefono: ' ',
+            ciudad: ' ',
+            direccionalmacen: ' ',
+            nombrealmacen: ' ',
+        },
+        defaultItem: {
+            id: ' ',
+            nombre: ' ',
+            telefono: ' ',
+            ciudad: ' ',
+            direccionalmacen: ' ',
+            nombrealmacen: ' ',
+        },
+    }),
+
+    computed: {
+        formTitle() {
+            return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+        },
+    },
+
+    watch: {
+        dialog(val) {
+            val || this.close()
+        },
+        dialogDelete(val) {
+            val || this.closeDelete()
+        },
+    },
+
+    created() {
+        this.listarProducto()
+    },
+
+    methods: {
+        async listarProducto() {
+            const q = query(collection(db, "cliente"));
+            const resul = await getDocs(q);
+            resul.forEach((doc) => {
+                console.log("id", doc.id);
+                this.desserts.push({
+                    keyid: doc.id,
+                    id: doc.data().id,
+                    nombre: doc.data().nombre,
+                    telefono: doc.data().telefono,
+                    ciudad: doc.data().ciudad,
+                    direccionalmacen: doc.data().direccionalmacen,
+                    nombrealmacen: doc.data().nombrealmacen,
+                })
+            })
+        },
+
+        async Eliminartickets() {
+            console.log(this.editedItem.keyid)
+            const Ref = doc(db, "tickets", this.editedItem.keyid);
+            await deleteDoc(Ref, {
+                nombre: this.editedItem.nombre,
+                telefono: this.editedItem.telefono,
+                ciudad: this.editedItem.ciudad,
+                direccionalmacen: this.editedItem.direccionalmacen,
+                nombrealmacen: this.editedItem.nombrealmacen,
+            })
+                .then(console.log("Eliminado con exito"))
+                .catch(function (error) {
+                    console.log(error)
+                })
+        },
+
+
+        async Actualizartickets() {
+            console.log("hola", this.editedItem.keyid)
+            const Ref = doc(db, "tickets", this.editedItem.keyid);
+            await updateDoc(Ref, {
+                nombre: this.editedItem.nombre,
+                telefono: this.editedItem.telefono,
+                ciudad: this.editedItem.ciudad,
+                direccionalmacen: this.editedItem.direccionalmacen,
+                nombrealmacen: this.editedItem.nombrealmacen,
+            })
+                .then(console.log("Termino update usuario"))
+                .catch(function (error) {
+                    console.log(error)
+
+                });
+        },
+
+        async createtickets() {
+            const colRef = collection(db, 'tickets');
+            const dataObj = {
+                id: this.editedItem.id,
+                nombre: this.editedItem.nombre,
+                telefono: this.editedItem.telefono,
+                ciudad: this.editedItem.ciudad,
+                direccionalmacen: this.editedItem.direccionalmacen,
+                nombrealmacen: this.editedItem.nombrealmacen,
+            }
+            const docRef = await addDoc(colRef, dataObj)
+            console.log('Document was created with: ID:', docRef.id)
+        },
+
+
+
+        initialize() {
+            this.desserts = [
+                {
+                    id: ' ',
+                    nombre: ' ',
+                    telefono: ' ',
+                    ciudad: ' ',
+                    direccionalmacen: ' ',
+                    nombrealmacen: ' ',
+                },
+
+            ]
+        },
+
+        editItem(item) {
+            this.editedIndex = this.desserts.indexOf(item)
+            this.editedItem = Object.assign({}, item)
+            this.dialog = true
+        },
+
+        deleteItem(item) {
+            this.editedIndex = this.desserts.indexOf(item)
+            this.editedItem = Object.assign({}, item)
+            this.dialogDelete = true
+        },
+
+        deleteItemConfirm() {
+            this.desserts.splice(this.editedIndex, 1)
+            this.closeDelete()
+            this.Eliminarcliente()
+        },
+
+        close() {
+            this.dialog = false
+            this.$nextTick(() => {
+                this.editedItem = Object.assign({}, this.defaultItem)
+                this.editedIndex = -1
+            })
+        },
+
+        closeDelete() {
+            this.dialogDelete = false
+            this.$nextTick(() => {
+                this.editedItem = Object.assign({}, this.defaultItem)
+                this.editedIndex = -1
+            })
+        },
+
+        save() {
+            if (this.editedIndex > -1) {
+                Object.assign(this.desserts[this.editedIndex], this.editedItem)
+                this.Actualizarcliente()
+            } else {
+                this.desserts.push(this.editedItem),
+                    this.createUser()
+
+            }
+            this.close()
+        },
     },
 }
-
-
-
 </script>
 <style>
 .SuperDiv {
