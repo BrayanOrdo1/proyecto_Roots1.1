@@ -16,7 +16,7 @@
        <v-divider></v-divider>
 
        <v-list density="compact" nav>
-         <v-list-item prepend-icon="mdi mdi-home" title="Home" value="myfiles" router-link to='/compras'></v-list-item>
+         <v-list-item prepend-icon="mdi mdi-home" title="Home" value="myfiles" router-link to='/Home'></v-list-item>
          <v-list-item prepend-icon="mdi mdi-content-cut" title="Tickets" value="shared" router-link to='/tickets'></v-list-item>
          <v-list-item prepend-icon="mdi mdi-cash-multiple" title="Nomina" value="nomina" ></v-list-item>
          <v-list-item prepend-icon="mdi mdi-package-variant-closed" title="Inventario" value="Inventory" ></v-list-item>
