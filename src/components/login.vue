@@ -12,7 +12,7 @@
                     <v-form>
                         <div>
                             <p style="justify-content: left; display:flex; color:#504C4B; margin-bottom:2%;">Username</p>
-                            <v-text-field placeholder="Username ">
+                            <v-text-field v-model="username" placeholder="Username ">
                                 <v-icon style="margin-right: 2%;">
                                     mdi mdi-account
                                 </v-icon>
@@ -20,7 +20,7 @@
                         </div>
                         <div class="Password">
                             <p style="justify-content: left; display:flex; color:#504C4B; margin-bottom:2%;">Password</p>
-                            <v-text-field type="password" placeholder="Password">
+                            <v-text-field v-model="password" type="password" placeholder="Password">
                                 <v-icon style="margin-right: 2%;">
                                     mdi mdi-lock
                                 </v-icon>
@@ -38,21 +38,45 @@
 </template>
 
 <script>
+import db from '../firebase/init.js'
+import { collection, getDocs, query, where } from 'firebase/firestore'
+
 export default {
-    name: "login_1",
-    data() {
-        return {
-            mostrarDiv: false,
-        };
+    name:'login_1',
+    data:()=>({
+        visible:false,
+        username:'aaaa',
+        password:'1234'
+    }),
+    methods:{
+        async buscarUserFromFirebase(usuario,clave) {
+            const q=query(
+                collection(db,"Usuario"),
+                where("Usuario",'===', usuario),
+                where("Clave",'===', clave)
+            );
+            const resul=await getDocs(q);
+            console.log(resul.docs[0]);
+            if (!resul.empty) {
+                localStorage.setItem('userId',resul.docs[0]);
+                return resul.docs[0].data();
+            }
+            return null;
+        },
+
+        async login() {
+            const user=await this.buscarUserFromFirebase(this.username,this.password);
+
+            if (user) {
+                alert('Has iniciado sesión correctamente');
+                this.$store.dispatch('setUser',user)
+                this.$store.commit('setUserAuthenticated',true)
+                this.$store.push('/home')
+            } else {
+                alert('Credenciales incorrectas')
+            }
+        }
     },
-    methods: {
-    cliente() {
-      // Aquí puedes realizar cualquier lógica adicional antes de la navegación
-      // (por ejemplo, comprobar requisitos)
-      // Luego, utiliza router.push() para navegar a la ruta de ComponenteB
-      this.$router.push({ name: 'main' });
-    }
-  }
 }
 </script>
 

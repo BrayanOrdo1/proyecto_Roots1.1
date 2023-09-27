@@ -20,6 +20,9 @@
                     <template v-slot:activator="{ props }">
                         <v-btn id="btn" v-bind="props" style="border-radius: 9999px; border-width: 1px;">+ agregar cliente
                         </v-btn>
+                        <v-btn @click="imprimir()">
+                            imprimir
+                        </v-btn>
                     </template>
                     <v-card-title>
                         <span class="text-h5">{{ formTitle }}</span>
@@ -76,7 +79,7 @@
                             </v-dialog>
                             <v-dialog v-model="dialogDelete" max-width="500px">
                                 <v-card>
-                                    <v-card-title class="text-h5" style="border-radius: 100px; text-align: center;">Estas seguro de liminar este cliente?</v-card-title>
+                                    <v-card-title class="text-h5" style="border-radius: 100px; text-align: center;">Estas seguro de eliminar este cliente?</v-card-title>
                                     <v-card-actions>
                                         <v-spacer></v-spacer>
                                         <v-btn color="blue-darken-1" variant="text" @click="closeDelete">Cancel</v-btn>
@@ -104,6 +107,8 @@
     </div>
 </template>
 <script>
+import jsPDF from 'jspdf'
+require('jspdf-autotable')
 import db from '../firebase/init.js'
 import { collection, getDocs, query, addDoc, doc, updateDoc, deleteDoc } from 'firebase/firestore'
 
@@ -122,9 +127,9 @@ export default {
             { title: 'Nombre', key: 'nombre' },
             { title: 'Telefono', key: 'telefono' },
             { title: 'Ciudad', key: 'ciudad' },
-            { title: 'Direccion almace', key: 'direccionalmacen' },
+            { title: 'Direccion almacen', key: 'direccionalmacen' },
             { title: 'Nombre almacen', key: 'nombrealmacen', sortable: false },
-            { title: 'Actions', key: 'actions', sortable: false },
+            { title: 'Acciones', key: 'actions', sortable: false },
         ],
         desserts: [],
         editedIndex: -1,
@@ -231,7 +236,19 @@ export default {
             console.log('Document was created with: ID:', docRef.id)
         },
 
+        async imprimir() {
+            let colums=[
+                {title:"Nombre", datakey:'nombre'},
+                {title:"Telefono", datakey:'telefono'}
+            ]
+            let registros=this.desserts;
 
+            let doc=new jsPDF("p",'pt');
+            doc.autoTable(colums,registros,{
+            margin:{top:70},addPageContent:function(){doc.text("Nombre",40,30)}
+            });
+            doc.save('Nombre.pdf')
+        },
 
         initialize() {
             this.desserts = [
