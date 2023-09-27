@@ -19,71 +19,57 @@
 
             <div class="Tikets_1">
 
-                <div class="Div" >
+                <div class="Div">
                     <div class="p4">
-                       
-                        <p class="p11">Ticket No: {{iTikets}} </p>
-                        <p >Orden de pedido: {{iOrden}}</p>
+
+                        <p class="p11">Ticket No: {{ iTikets }} </p>
+                        <p>Orden de pedido: {{ iOrden }}</p>
                     </div>
                     <div class="p2">
-                        <p style="margin-left:-5%; width: 180%;">Cliente {{iCli}}</p>
-                        <p>Referencia {{iRef}}</p>
-                        
-                       
-                       
+                        <p style="margin-left:-5%; width: 180%;">Cliente {{ iCli }}</p>
+                        <p>Referencia {{ iRef }}</p>
+
+
+
                     </div>
                     <div class="p8">
-                        <p>Proceso {{iProce}}</p>
-                        <p style="margin-left:-5%; width: 180%;" >Color {{iColor}}</p>
+                        <p>Proceso {{ iProce }}</p>
+                        <p style="margin-left:-5%; width: 180%;">Color {{ iColor }}</p>
                         <div class="Divh3">
 
                         </div>
                     </div>
                     <div class="p10">
-                        <p>Flecha {{iFlecha}}</p>
-                        <p>Pares {{iPares}}</p>
+                        <p>Flecha {{ iFlecha }}</p>
+                        <p>Pares {{ iPares }}</p>
                         <div class="Divh3">
 
                         </div>
                     </div>
-                    
+
                 </div>
 
             </div>
-            
-            <v-card-text>
-                <v-container>
-                    <v-row>
-                        <v-col cols="12" sm="6" md="4">
-                            <v-text-field v-model="editedItem.iTikets" label="Codigo"></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="4">
-                            <v-text-field v-model="editedItem.iOrden" label="Nombre"></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="4">
-                            <v-text-field v-model="editedItem.iCli"
-                                label="Telefono"></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="4">
-                            <v-text-field v-model="editedItem.iRef" label="Ciudad"></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="4">
-                            <v-text-field v-model="editedItem.iProce"
-                                label="Direccion almacen"></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="4">
-                            <v-text-field v-model="editedItem.iColor"
-                                label="Nombre almacen"></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="4">
-                            <v-text-field v-model="editedItem.iPares"
-                                label="Nombre almacen"></v-text-field>
-                        </v-col>
-                    </v-row>
-                </v-container>
-            </v-card-text>
-            
-        
+
+            <v-dialog v-model="dialog">
+                <div style="height: 20%; width:60%; background-color:blue; margin: 0 auto;">
+                    <v-card>
+                        <div class="caja1">
+                            <div class="caja2">
+                                <h1>gerd</h1>
+                            </div>
+                        </div>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="blue-darken-1" variant="text" @click="close">Cancel</v-btn>
+                            <v-btn color="blue-darken-1" variant="text" @click="save">Save</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </div>
+            </v-dialog>
+
+
+
         </div>
     </div>
 </template>
@@ -102,12 +88,12 @@ export default {
                 sortable: false,
                 key: 'name',
             },
-            { title: 'Codigo', key: 'id' },
-            { title: 'Nombre', key: 'nombre' },
-            { title: 'Telefono', key: 'telefono' },
-            { title: 'Ciudad', key: 'ciudad' },
-            { title: 'Direccion almace', key: 'direccionalmacen' },
-            { title: 'Nombre almacen', key: 'nombrealmacen', sortable: false },
+            { title: 'iTikets', key: 'id' },
+            { title: 'iOrden', key: 'nombre' },
+            { title: 'iCli', key: 'telefono' },
+            { title: 'iRef', key: 'ciudad' },
+            { title: 'iProce', key: 'direccionalmacen' },
+            { title: 'iPares ', key: 'nombrealmacen', sortable: false },
             { title: 'Actions', key: 'actions', sortable: false },
         ],
         desserts: [],
@@ -132,7 +118,7 @@ export default {
 
     computed: {
         formTitle() {
-            return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+            return this.editedIndex === -1 ? ' ' : ' '
         },
     },
 
@@ -292,6 +278,7 @@ export default {
     width: 85%;
     float: left;
     margin-left: 3.5%;
+    margin-top: -20%;
 }
 
 .Tikets_1 {
@@ -315,8 +302,8 @@ export default {
     position: absolute;
 }
 
-.p2{
-width: 180%;
+.p2 {
+    width: 180%;
 }
 
 .p4,
@@ -350,9 +337,19 @@ width: 180%;
     margin-right: 50%;
     float: left;
     position: relative;
+    margin-top: 25%;
 
 }
 
-
+.caja1 {
+    margin-top: 40%;
+}
+.caja2 {
+    background-color: #3B3B3B;
+    margin-top: 20%;
+    width: 40%;
+    height: 60%;
+    margin-left: 5%;
+}
 </style>
   
