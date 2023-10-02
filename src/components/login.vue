@@ -28,8 +28,7 @@
                         </div>
                         <v-checkbox label="Remember me"
                             style="margin-top: -7%; margin-bottom:-8%; color:black; font-size: 90%;"></v-checkbox>
-                        <v-btn type="submit" block class="mt-2" @click="cliente"
-                            style=" background-color:#5C7CF2; color:white;">login</v-btn>
+                        <v-btn type="submit" block class="mt-2" @click="login" style=" background-color:#5C7CF2; color:white;">login</v-btn>
                     </v-form>
                 </div>
             </div>
@@ -45,15 +44,16 @@ export default {
     name:'login_1',
     data:()=>({
         visible:false,
-        username:'aaaa',
-        password:'1234'
+        username:'',
+        password:''
     }),
     methods:{
         async buscarUserFromFirebase(usuario,clave) {
             const q=query(
-                collection(db,"Usuario"),
+                collection(db,'usuario'),
                 where("Usuario",'===', usuario),
-                where("Clave",'===', clave)
+                where("Clave",'===', clave),
+                console.log('h'),
             );
             const resul=await getDocs(q);
             console.log(resul.docs[0]);
@@ -71,7 +71,7 @@ export default {
                 alert('Has iniciado sesión correctamente');
                 this.$store.dispatch('setUser',user)
                 this.$store.commit('setUserAuthenticated',true)
-                this.$store.push('/home')
+                this.$store.push('/Home')
             } else {
                 alert('Credenciales incorrectas')
             }
