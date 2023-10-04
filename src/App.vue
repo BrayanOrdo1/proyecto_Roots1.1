@@ -50,7 +50,7 @@
 // import Add_cliente from './components/form_cli.vue'
 
 export default {
- name: 'principa_1',
+ name: 'App',
 
  components: {
    // Add_cliente
