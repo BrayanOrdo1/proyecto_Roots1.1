@@ -8,7 +8,9 @@ const firebaseConfig = {
   storageBucket: "roots-df341.appspot.com",
   messagingSenderId: "270244163078",
   appId: "1:270244163078:web:3ed90f18891557199d9d87"
+
 };
+
 
 initializeApp(firebaseConfig);
 const db = getFirestore();
