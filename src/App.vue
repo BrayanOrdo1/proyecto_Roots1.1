@@ -23,7 +23,7 @@
          <v-list-item prepend-icon="mdi mdi-cash-multiple" title="Nomina" value="nomina" router-link to='/Nomina' ></v-list-item>
          <v-list-item prepend-icon="mdi mdi-package-variant-closed" title="Inventario" value="Inventory" ></v-list-item>
          <v-list-item prepend-icon="mdi mdi-account-group" title="Clientes" value="clientes" router-link to="/clientes"></v-list-item>
-         <v-list-item prepend-icon="mdi mdi-account-circle" title="Perfiles" value="profiles" router-link to="/usuarios"></v-list-item>
+         <v-list-item prepend-icon="mdi mdi-account-circle" title="Perfiles" value="profiles" router-link to="/usuario"></v-list-item>
          <v-list-item prepend-icon="mdi mdi-account-circle" title="login" value="login" router-link to="/login"></v-list-item>
        </v-list>
      </v-navigation-drawer>
