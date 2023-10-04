@@ -2,7 +2,7 @@
     <v-card color="primary" class="pa-8 d-flex justify-center flex-wrap">
         <v-responsive max-width="550">
 
-            <v-autocomplete :item="items" auto-select-first class="flex-full-width" density="comfortable" item-props
+            <v-autocomplete :items="desserts" auto-select-first class="flex-full-width" density="comfortable" item-props
                 menu-icon="" placeholder="Depatamento, ciudad o cliente por buscar" prepend-inner-icon="mdi-magnify" rounded
                 theme="light" variant="solo"></v-autocomplete>
         </v-responsive>
@@ -113,7 +113,7 @@ import db from '../firebase/init.js'
 import { collection, getDocs, query, addDoc, doc, updateDoc, deleteDoc } from 'firebase/firestore'
 
 export default {
-    name: 'Producto_1',
+    name: 'clientes_1',
     data: () => ({
         dialog: false,
         dialogDelete: false,
@@ -134,20 +134,20 @@ export default {
         desserts: [],
         editedIndex: -1,
         editedItem: {
-            id: ' ',
-            nombre: ' ',
-            telefono: ' ',
-            ciudad: ' ',
-            direccionalmacen: ' ',
-            nombrealmacen: ' ',
+            id: '',
+            nombre: '',
+            telefono: '',
+            ciudad: '',
+            direccionalmacen: '',
+            nombrealmacen: '',
         },
         defaultItem: {
-            id: ' ',
-            nombre: ' ',
-            telefono: ' ',
-            ciudad: ' ',
-            direccionalmacen: ' ',
-            nombrealmacen: ' ',
+            id: '',
+            nombre: '',
+            telefono: '',
+            ciudad: '',
+            direccionalmacen: '',
+            nombrealmacen: '',
         },
     }),
 
