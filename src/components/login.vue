@@ -51,7 +51,7 @@ export default {
             const resul=await getDocs(q);
             console.log(resul.docs[0]);
             if (!resul.empty) {
-                localStorage.setItem('userId',resul.docs[0]);
+                localStorage.setItem('userId',resul.docs[0].id);
                 return resul.docs[0].data();
             }
             return null;

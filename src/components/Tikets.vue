@@ -21,46 +21,44 @@
             </div>
             <div class="Tikets_1">
                 <div class="Div">
-                    <v-card-text>
-                        <v-container>
-                            <v-row>
-                                <v-col cols="12" sm="6" md="4">
-                                    <v-text-field v-model="editedItem.id" label="id"></v-text-field>
-                                </v-col>
-                                <v-col cols="12" sm="6" md="4">
-                                    <v-text-field v-model="editedItem.orden" label="orden"></v-text-field>
-                                </v-col>
-                                <v-col cols="12" sm="6" md="4">
-                                    <v-text-field v-model="editedItem.cliente" label="cliente"></v-text-field>
-                                </v-col>
-                                <v-col cols="12" sm="6" md="4">
-                                    <v-text-field v-model="editedItem.referencia" label="Ref"></v-text-field>
-                                </v-col>
-                                <v-col cols="12" sm="6" md="4">
-                                    <v-text-field v-model="editedItem.proceso" label="Proceso"></v-text-field>
-                                </v-col>
-                                <v-col cols="12" sm="6" md="4">
-                                    <v-text-field v-model="editedItem.pares" label="Pares"></v-text-field>
-                                </v-col>
-                            </v-row>
-                        </v-container>
-                    </v-card-text>
-               
-                </div>
+                    <v-dialog v-model="dialog">
+                        <v-card>
+                            <v-card-text>
+                                <v-container>
+                                    <v-row>
+                                        <v-col cols="12" sm="6" md="4">
+                                            <v-text-field v-model="editedItem.id" label="id"></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="4">
+                                            <v-text-field v-model="editedItem.orden" label="orden"></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="4">
+                                            <v-text-field v-model="editedItem.cliente" label="cliente"></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="4">
+                                            <v-text-field v-model="editedItem.referencia" label="Ref"></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="4">
+                                            <v-text-field v-model="editedItem.proceso" label="Proceso"></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="4">
+                                            <v-text-field v-model="editedItem.pares" label="Pares"></v-text-field>
+                                        </v-col>
+                                    </v-row>
+                                </v-container>
+                            </v-card-text>
+                            <v-card>
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn color="blue-darken-1" variant="text" @click="close">Cancel</v-btn>
+                                    <v-btn color="blue-darken-1" variant="text" @click="save">Save</v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-card>
+                    </v-dialog>
 
+                </div>
             </div>
-
-            <v-dialog v-model="dialog">
-                <div style="height: 20%; width:60%; background-color:blue; margin: 0 auto;">
-                    <v-card>
-                        <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn color="blue-darken-1" variant="text" @click="close">Cancel</v-btn>
-                            <v-btn color="blue-darken-1" variant="text" @click="save">Save</v-btn>
-                        </v-card-actions>
-                    </v-card>
-                </div>
-            </v-dialog>
         </div>
     </div>
 </template>
