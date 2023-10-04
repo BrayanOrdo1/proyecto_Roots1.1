@@ -9,27 +9,21 @@
                 <v-img src="../assets/descarga.jpg" class="img1"></v-img>
                 <p class="text3">¡Hello! Welcome back</p>
                 <div class="login">
-                    <v-form>
-                        <div>
                             <p style="justify-content: left; display:flex; color:#504C4B; margin-bottom:2%;">Username</p>
                             <v-text-field v-model="username" placeholder="Username ">
                                 <v-icon style="margin-right: 2%;">
                                     mdi mdi-account
                                 </v-icon>
                             </v-text-field>
-                        </div>
-                        <div class="Password">
                             <p style="justify-content: left; display:flex; color:#504C4B; margin-bottom:2%;">Password</p>
                             <v-text-field v-model="password" type="password" placeholder="Password">
                                 <v-icon style="margin-right: 2%;">
                                     mdi mdi-lock
                                 </v-icon>
                             </v-text-field>
-                        </div>
                         <v-checkbox label="Remember me"
                             style="margin-top: -7%; margin-bottom:-8%; color:black; font-size: 90%;"></v-checkbox>
-                        <v-btn type="submit" block class="mt-2" @click="login" style=" background-color:#5C7CF2; color:white;">login</v-btn>
-                    </v-form>
+                        <v-btn  block class="mt-2" @click="login" style=" background-color:#5C7CF2; color:white;">login</v-btn>
                 </div>
             </div>
         </div>
@@ -48,12 +42,11 @@ export default {
         password:''
     }),
     methods:{
-        async buscarUserFromFirebase(usuario,clave) {
+        async buscarUsuarioDesdeFirebase(usuario,clave) {
             const q=query(
                 collection(db,'usuario'),
-                where("Usuario",'===', usuario),
-                where("Clave",'===', clave),
-                console.log('h'),
+                where("Usuario",'==', usuario),
+                where("Clave",'==', clave),
             );
             const resul=await getDocs(q);
             console.log(resul.docs[0]);
@@ -65,8 +58,8 @@ export default {
         },
 
         async login() {
-            const user=await this.buscarUserFromFirebase(this.username,this.password);
-
+            const user=await this.buscarUsuarioDesdeFirebase(this.username,this.password);
+            console.log(user);
             if (user) {
                 alert('Has iniciado sesión correctamente');
                 this.$store.dispatch('setUser',user)

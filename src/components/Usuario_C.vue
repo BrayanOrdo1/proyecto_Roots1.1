@@ -175,7 +175,7 @@ export default {
     },
 
     async EliminarUsuarios() {
-      console.log("hola", this.editedItem.keyid)
+      console.log( this.editedItem.keyid)
       const Ref = doc(db, "usuario", this.editedItem.keyid);
       await deleteDoc(Ref, {
         id: this.editedItem.id,
@@ -194,7 +194,7 @@ export default {
     },
 
     async ActualizarUsuarios() {
-      console.log("hola", this.editedItem.keyid)
+      console.log( this.editedItem.keyid)
       const Ref = doc(db, "usuario", this.editedItem.keyid);
       await updateDoc(Ref, {
         id: this.editedItem.id,
