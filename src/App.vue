@@ -97,4 +97,11 @@ export default {
   font-size: 180%;
   position: relative;
 }
+.ft{
+  background-color: red;
+  height: 80%;
+}
+.v-navigation-drawer.active {
+  background-color: black;
+}
 </style>
