@@ -1,108 +1,108 @@
 <template>
-    <v-card color="primary" class="pa-8 d-flex justify-center flex-wrap">
-        <v-responsive max-width="550">
+    <div class="Megadiv">
+        <div class="Div_Lateral">
+            <v-dialog v-model="dialog">
+                <template v-slot:activator="{ props }">
+                    <v-btn id="btn" v-bind="props" style="border-radius: 9999px; border-width: 1px;">+ agregar
+                        cliente
+                    </v-btn>
+                    <v-btn id="btn" @click="imprimir()">
+                        imprimir
+                    </v-btn>
+                </template>
+                <v-card-title>
+                    <span class="text-h5">{{ formTitle }}</span>
+                </v-card-title>
+            </v-dialog>
 
-            <v-autocomplete :items="desserts" auto-select-first class="flex-full-width" density="comfortable" item-props
-                menu-icon="" placeholder="Depatamento, ciudad o cliente por buscar" prepend-inner-icon="mdi-magnify" rounded
-                theme="light" variant="solo"></v-autocomplete>
-        </v-responsive>
-    </v-card>
-    <div class="clie" style="background-color:primary">
-        <div id="left">
-            <div class="left">
-                <v-select style="margin:0 auto;margin-top: 15px;width: 90%;" clearable label="Departamentos"
-                    :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']" variant="outlined">
-                </v-select>
-                <v-select style="margin:0 auto;width: 90%;" clearable label="Ciudad"
-                    :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']" variant="outlined">
-                </v-select>
-                <v-dialog v-model="dialog">
-                    <template v-slot:activator="{ props }">
-                        <v-btn id="btn" v-bind="props" style="border-radius: 9999px; border-width: 1px;">+ agregar cliente
-                        </v-btn>
-                        <v-btn @click="imprimir()">
-                            imprimir
-                        </v-btn>
-                    </template>
-                    <v-card-title>
-                        <span class="text-h5">{{ formTitle }}</span>
-                    </v-card-title>
-                </v-dialog>
-            </div>
+            <v-select style="margin:0 auto;margin-top: 15px;width: 90%; background-color: white;" clearable
+                label="Departamentos" :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']"
+                variant="outlined">
+            </v-select>
+            <v-select color="primary" style="margin:0 auto;width: 90%;background-color: white;" clearable label="Ciudad"
+                :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']" variant="outlined">
+            </v-select>
+
+
         </div>
-        <div id="right">
-            <div class="right">
-                <v-card class="mx-auto" style="text-align: center;" max-width="1200">
-                    <v-card-title>
-                        Lista de clientes
-                    </v-card-title>
-                    <v-divider></v-divider>
-                    <v-data-table :headers="headers" :items="desserts" :sort-by="[{ order: 'asc' }]" class="elevation-1"
-                        style="height: 600px;">
-                        <template v-slot:top>
-                            <v-dialog v-model="dialog">
-                                <v-card>
-                                    <v-card-text>
-                                        <v-container>
-                                            <v-row>
-                                                <v-col cols="12" sm="6" md="4">
-                                                    <v-text-field v-model="editedItem.id" label="Codigo"></v-text-field>
-                                                </v-col>
-                                                <v-col cols="12" sm="6" md="4">
-                                                    <v-text-field v-model="editedItem.nombre" label="Nombre"></v-text-field>
-                                                </v-col>
-                                                <v-col cols="12" sm="6" md="4">
-                                                    <v-text-field v-model="editedItem.telefono"
-                                                        label="Telefono"></v-text-field>
-                                                </v-col>
-                                                <v-col cols="12" sm="6" md="4">
-                                                    <v-text-field v-model="editedItem.ciudad" label="Ciudad"></v-text-field>
-                                                </v-col>
-                                                <v-col cols="12" sm="6" md="4">
-                                                    <v-text-field v-model="editedItem.direccionalmacen"
-                                                        label="Direccion almacen"></v-text-field>
-                                                </v-col>
-                                                <v-col cols="12" sm="6" md="4">
-                                                    <v-text-field v-model="editedItem.nombrealmacen"
-                                                        label="Nombre almacen"></v-text-field>
-                                                </v-col>
-                                            </v-row>
-                                        </v-container>
-                                    </v-card-text>
+        <div class="MicroDiv">
+            <v-responsive max-width="550">
+                <v-autocomplete :items="desserts" auto-select-first class="flex-full-width" density="comfortable" item-props
+                    menu-icon="" placeholder="Depatamento, ciudad o cliente por buscar" prepend-inner-icon="mdi-magnify"
+                    rounded theme="light" variant="solo"></v-autocomplete>
+            </v-responsive>
 
-                                    <v-card-actions> 
-                                        <v-spacer></v-spacer>
-                                        <v-btn color="blue-darken-1" variant="text" @click="close">Cancel</v-btn>
-                                        <v-btn color="blue-darken-1" variant="text" @click="save">Save</v-btn>
-                                    </v-card-actions>
-                                </v-card>
-                            </v-dialog>
-                            <v-dialog v-model="dialogDelete" max-width="500px">
-                                <v-card>
-                                    <v-card-title class="text-h5" style="border-radius: 100px; text-align: center;">Estas seguro de eliminar este cliente?</v-card-title>
-                                    <v-card-actions>
-                                        <v-spacer></v-spacer>
-                                        <v-btn color="blue-darken-1" variant="text" @click="closeDelete">Cancel</v-btn>
-                                        <v-btn color="blue-darken-1" variant="text" @click="deleteItemConfirm">OK</v-btn>
-                                        <v-spacer></v-spacer>
-                                    </v-card-actions>
-                                </v-card>
-                            </v-dialog>
-                        </template>
+            <v-card class="mx-auto" style="text-align: center;" max-width="1200">
+                <v-card-title>
+                    Lista de clientes
+                </v-card-title>
+                <v-divider></v-divider>
+                <v-data-table :headers="headers" :items="desserts" :sort-by="[{ order: 'asc' }]" class="elevation-1"
+                    style="height: 600px;">
+                    <template v-slot:top>
+                        <v-dialog v-model="dialog">
+                            <v-card>
+                                <v-card-text>
+                                    <v-container>
+                                        <v-row>
+                                            <v-col cols="12" sm="6" md="4">
+                                                <v-text-field v-model="editedItem.id" label="Codigo"></v-text-field>
+                                            </v-col>
+                                            <v-col cols="12" sm="6" md="4">
+                                                <v-text-field v-model="editedItem.nombre" label="Nombre"></v-text-field>
+                                            </v-col>
+                                            <v-col cols="12" sm="6" md="4">
+                                                <v-text-field v-model="editedItem.telefono" label="Telefono"></v-text-field>
+                                            </v-col>
+                                            <v-col cols="12" sm="6" md="4">
+                                                <v-text-field v-model="editedItem.ciudad" label="Ciudad"></v-text-field>
+                                            </v-col>
+                                            <v-col cols="12" sm="6" md="4">
+                                                <v-text-field v-model="editedItem.direccionalmacen"
+                                                    label="Direccion almacen"></v-text-field>
+                                            </v-col>
+                                            <v-col cols="12" sm="6" md="4">
+                                                <v-text-field v-model="editedItem.nombrealmacen"
+                                                    label="Nombre almacen"></v-text-field>
+                                            </v-col>
+                                        </v-row>
+                                    </v-container>
+                                </v-card-text>
 
-                        <template v-slot:[`item.actions`]="{ item }">
-                            <v-icon size="small" class="me-2" @click="editItem(item.raw)">
-                                mdi-pencil
-                            </v-icon>
-                            <v-icon size="small" @click="deleteItem(item.raw)">
-                                mdi-delete
-                            </v-icon>
-                        </template>
-                        <template v-slot:no-data>
-                        </template>
-                    </v-data-table>
-                </v-card>
-            </div>
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn color="blue-darken-1" variant="text" @click="close">Cancel</v-btn>
+                                    <v-btn color="blue-darken-1" variant="text" @click="save">Save</v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-dialog>
+                        <v-dialog v-model="dialogDelete" max-width="500px">
+                            <v-card>
+                                <v-card-title class="text-h5" style="border-radius: 100px; text-align: center;">Estas seguro
+                                    de eliminar
+                                    este cliente?</v-card-title>
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn color="blue-darken-1" variant="text" @click="closeDelete">Cancel</v-btn>
+                                    <v-btn color="blue-darken-1" variant="text" @click="deleteItemConfirm">OK</v-btn>
+                                    <v-spacer></v-spacer>
+                                </v-card-actions>
+                            </v-card>
+                        </v-dialog>
+                    </template>
+
+                    <template v-slot:[`item.actions`]="{ item }">
+                        <v-icon size="small" class="me-2" @click="editItem(item.raw)">
+                            mdi-pencil
+                        </v-icon>
+                        <v-icon size="small" @click="deleteItem(item.raw)">
+                            mdi-delete
+                        </v-icon>
+                    </template>
+                    <template v-slot:no-data>
+                    </template>
+                </v-data-table>
+            </v-card>
         </div>
     </div>
 </template>
@@ -237,15 +237,15 @@ export default {
         },
 
         async imprimir() {
-            let colums=[
-                {title:"Nombre", datakey:'nombre'},
-                {title:"Telefono", datakey:'telefono'}
+            let colums = [
+                { title: "Nombre", datakey: 'nombre' },
+                { title: "Telefono", datakey: 'telefono' }
             ]
-            let registros=this.desserts;
+            let registros = this.desserts;
 
-            let doc=new jsPDF("p",'pt');
-            doc.autoTable(colums,registros,{
-            margin:{top:70},addPageContent:function(){doc.text("Nombre",40,30)}
+            let doc = new jsPDF("p", 'pt');
+            doc.autoTable(colums, registros, {
+                margin: { top: 70 }, addPageContent: function () { doc.text("Nombre", 40, 30) }
             });
             doc.save('Nombre.pdf')
         },
@@ -325,7 +325,7 @@ export default {
 }
 
 #left {
-    width: 20%;
+    width: 100%;
     height: 650px;
     margin-left: 2%;
     margin-top: 2%;
@@ -346,10 +346,7 @@ export default {
 }
 
 #right {
-    width: 70%;
-    margin-left: 25%;
-    margin-top: 2%;
-    position: absolute;
+    width: 20%;
 }
 
 .right {

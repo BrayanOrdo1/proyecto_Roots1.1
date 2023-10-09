@@ -11,23 +11,26 @@
             <div class="parte_de_abajo">
 
                 <p class="p21" style="margin-top: 3%; width: 22%;">Transaction</p>
-                <p style="color: white; margin-top: -5%; margin-left: 65%;" ><v-btn icon="$vuetify" variant="plain" size="small">
+                <p style="color: white; margin-top: -5%; margin-left: 65%;"><v-btn icon="$vuetify" variant="plain"
+                        size="small">
                     </v-btn><b>Time</b></p>
-                  
+
             </div>
             <div class="ultimate">
-            <div class="Ultimo_Div">
-                <p style="color: #7ed597; position: relative; float: right; margin-right: 10%; margin-top: 5%;"> Succesful
-                </p>
-                <p style="color: #8e8e8e;; position: relative; float: right; margin-right: -20%; margin-top: 12%;"> May 4th,
-                    2020</p>
-                <h1 style="font-size: 110%; margin-left: 20%; margin-top:5%; color: white;">$5.122,50</h1>
-                <p class="p21" style="margin-top: 0%; margin-left: 19%; font-size: 80%;">Resumen Semanal</p>
+                <div class="Ultimo_Div">
+                    <p style="color: #7ed597; position: relative; float: right; margin-right: 10%; margin-top: 5%;">
+                        Succesful
+                    </p>
+                    <p style="color: #8e8e8e;; position: relative; float: right; margin-right: -20%; margin-top: 12%;"> May
+                        4th,
+                        2020</p>
+                    <h1 style="font-size: 110%; margin-left: 20%; margin-top:5%; color: white;">$5.122,50</h1>
+                    <p class="p21" style="margin-top: 0%; margin-left: 19%; font-size: 80%;">Resumen Semanal</p>
+                </div>
+                <!-- favor no quitar este div ya que ayuda con estilos no usar el div de abajo -->
+                <div class="Ultimo_Div" style="height: 70%; background-color:transparent; border: 0px transparent; ">
+                </div>
             </div>
-            <!-- favor no quitar este div ya que ayuda con estilos no usar el div de abajo -->
-            <div class="Ultimo_Div" style="height: 70%; background-color:transparent; border: 0px transparent; ">
-            </div>
-        </div>
         </div>
         <div class="MicroDiv">
             <div class="MacroDiv">
@@ -166,7 +169,7 @@ export default {
 </script>
 <style>
 .Megadiv {
-    height: 89.9vh;
+    height: 93.3vh;
     width: 100vw;
     background-color: black;
 }
@@ -319,7 +322,7 @@ export default {
     height: 7%;
     width: 100%;
     margin-top: -5%;
-    
+
 }
 
 .Ultimo_Div {
@@ -331,10 +334,10 @@ export default {
     border-radius: 12%;
     border: 3px solid #3b3b3b;
 }
-.ultimate{
-   
+
+.ultimate {
+
     height: 100%;
     width: 100%;
     overflow: auto;
-}
-</style>
+}</style>
