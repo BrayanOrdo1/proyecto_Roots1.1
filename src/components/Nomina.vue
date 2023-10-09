@@ -10,14 +10,14 @@
             </div>
             <div class="parte_de_abajo">
 
-                <p class="p21" style="margin-top: 3%; width: 22%;">Transaction</p>
+                <p class="p21" style="margin-top: 3%; width: 22%;  margin-left: 3%;">Transaction</p>
                 <p style="color: white; margin-top: -5%; margin-left: 65%;"><v-btn icon="$vuetify" variant="plain"
                         size="small">
                     </v-btn><b>Time</b></p>
 
             </div>
             <div class="ultimate">
-                <div class="Ultimo_Div">
+                <div class="Ultimo_Div" style=" margin-left: 7%;">
                     <p style="color: #7ed597; position: relative; float: right; margin-right: 10%; margin-top: 5%;">
                         Succesful
                     </p>
@@ -140,7 +140,8 @@
                         <p class="p29">Emplantillado #D</p>
                     </div>
                     <div class="box3">
-                        <!-- <v-img src="../assets/Foto4.png"></v-img> -->
+
+
                         <v-btn class="p24" style="color: #8c52cc; background-color: transparent;" variant="plain">See
                             Details</v-btn>
                         <h1 class="h3">Pares: 23</h1>
@@ -243,8 +244,6 @@ export default {
 
 .p21 {
     color: #8e8e8e;
-    margin-left: 3%;
-
 
 }
 
@@ -329,7 +328,7 @@ export default {
     background-color: #1f1f1f;
     height: 15%;
     width: 75%;
-    margin-left: 7%;
+   
     margin-top: 5%;
     border-radius: 12%;
     border: 3px solid #3b3b3b;
