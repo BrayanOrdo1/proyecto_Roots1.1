@@ -74,7 +74,7 @@
 
                 <div class="box1">
                     <div class="box2">
-                        <!-- <v-img src="../assets/foto.png"></v-img> -->
+                        <v-img src="../assets/foto.png"></v-img> 
                         <v-btn class="p24" style="color: #7a69e9; background-color: transparent;" variant="plain">See
                             Details</v-btn>
                         <h1 class="h2">$5.122,50</h1>
@@ -83,42 +83,42 @@
                     </div>
 
                     <div class="box3">
-                        <!-- <v-img src="../assets//Foto3.png"></v-img> -->
+                         <v-img src="../assets//Foto3.png"></v-img> 
                         <v-btn class="p24" style="color: #7a69e9; background-color: transparent;" variant="plain">See
                             Details</v-btn>
                         <h1 class="h3">Pares: 23</h1>
                         <p class="p29">Resumen Semanal</p>
                     </div>
                     <div class="box2">
-                        <!-- <v-img src="../assets/Foto1.png"></v-img> -->
+                        <v-img src="../assets/Foto1.png"></v-img> 
                         <v-btn class="p24" style="color: #8c52cc; background-color: transparent;" variant="plain">See
                             Details</v-btn>
                         <h1 class="h2">$5.122,50</h1>
                         <p class="p29">Armado #B</p>
                     </div>
                     <div class="box3">
-                        <!-- <v-img src="../assets/Foto4.png"></v-img> -->
+                        <v-img src="../assets/Foto4.png"></v-img> 
                         <v-btn class="p24" style="color: #8c52cc; background-color: transparent;" variant="plain">See
                             Details</v-btn>
                         <h1 class="h3">Pares: 23</h1>
                         <p class="p29">Resumen Semanal</p>
                     </div>
                     <div class="box2">
-                        <!-- <v-img src="../assets/Foto2.png"></v-img> -->
+                         <v-img src="../assets/Foto2.png"></v-img> 
                         <v-btn class="p24" style="color: #975bce; background-color: transparent;" variant="plain">See
                             Details</v-btn>
                         <h1 class="h2">$5.122,50</h1>
                         <p class="p29">Costura #C</p>
                     </div>
                     <div class="box3">
-                        <!-- <v-img src="../assets/Foto5.png"></v-img> -->
+                        <v-img src="../assets/Foto5.png"></v-img> 
                         <v-btn class="p24" style="color: #975bce; background-color: transparent;" variant="plain">See
                             Details</v-btn>
                         <h1 class="h3">Pares: 23</h1>
                         <p class="p29">Resumen Semanal</p>
                     </div>
                     <div class="box2">
-                        <!-- <v-img src="../assets/foto.png"></v-img> -->
+                         <v-img src="../assets/foto.png"></v-img> 
                         <v-btn class="p24" style="color: #7a69e9; background-color: transparent;" variant="plain">See
                             Details</v-btn>
 
@@ -126,14 +126,14 @@
                         <p class="p29">Montada #D</p>
                     </div>
                     <div class="box3">
-                        <!-- <v-img src="../assets/Foto3.png"></v-img> -->
+                         <v-img src="../assets/Foto3.png"></v-img> 
                         <v-btn class="p24" style="color: #7a69e9; background-color: transparent;" variant="plain">See
                             Details</v-btn>
                         <h1 class="h3">Pares: 23</h1>
                         <p class="p29">Resumen Semanal</p>
                     </div>
                     <div class="box2">
-                        <!-- <v-img src="../assets/Foto1.png"></v-img> -->
+                        <v-img src="../assets/Foto1.png"></v-img> 
                         <v-btn class="p24" style="color: #8c52cc; background-color: transparent;" variant="plain">See
                             Details</v-btn>
                         <h1 class="h2">$5.122,50</h1>
