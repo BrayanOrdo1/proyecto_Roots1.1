@@ -144,10 +144,12 @@
                                 </v-card>
                             </v-card>
                         </v-dialog>
+                        <!-- Diálogo para confirmar la eliminación -->
                         <v-dialog v-model="dialogDelete" max-width="500px">
                             <v-card>
-                                <v-card-title class="text-h5" style="border-radius: 100px; text-align: center;">Estas seguro
-                                    de eliminar este cliente?</v-card-title>
+                                <v-card-title class="text-h5" style="border-radius: 100px; text-align: center;">
+                                    ¿Estás seguro de eliminar este ticket?
+                                </v-card-title>
                                 <v-card-actions>
                                     <v-spacer></v-spacer>
                                     <v-btn color="blue-darken-1" variant="text" @click="closeDelete">Cancel</v-btn>
@@ -178,6 +180,7 @@ export default {
     data: () => ({
         dialog: false,
         dialogDelete: false,
+        ticketToDeleteId: null,
         headers: [
             {
                 align: 'start',
@@ -230,11 +233,13 @@ export default {
     },
 
     created() {
-        // Llama a la función createTicketDiv() para crear los divs de los tickets
-        this.$nextTick(() => {
+        // Llama a la función loadTicketsFromLocalStorage solo si los tickets no están cargados en data
+        if (this.desserts.length === 0) {
             this.loadTicketsFromLocalStorage();
-            this.listarticket();
-        });
+        }
+
+        // Llama a la función listarticket para cargar los datos desde Firestore
+        this.listarticket();
     },
 
     methods: {
@@ -266,6 +271,11 @@ export default {
                 parentElement.removeChild(ticketDiv);
             }
 
+            // Verifica si el div `ticketsList` existe
+            if (this.$refs.ticketsList) {
+                // Limpia el div
+                this.$refs.ticketsList.innerHTML = '';
+            }
 
             // Elimina el ticket de la base de datos
             await deleteDoc(doc(db, "tickets", id));
@@ -343,6 +353,9 @@ export default {
 
             // Almacenar los datos del nuevo ticket en el almacenamiento local del navegador
             this.saveTicketToLocalData(docRef.id, dataObj);
+            // Después de guardar los datos en el almacenamiento local y crear el elemento de ticket
+            this.desserts.push(dataObj);
+
 
             // Limpiar el formulario
             this.editedItem = this.defaultItem;
@@ -359,15 +372,22 @@ export default {
             localStorage.setItem('ticketsData', JSON.stringify(storedData));
         },
         loadTicketsFromLocalStorage() {
-            // Cargar los tickets almacenados en el almacenamiento local
-            const storedData = JSON.parse(localStorage.getItem('ticketsData')) || {};
-            for (const docId in storedData) {
-                if (Object.prototype.hasOwnProperty.call(storedData, docId)) {
-                    const dataObj = storedData[docId];
-                    this.createTicketDiv(dataObj, docId);
+            // Verificar si this.$refs.ticketsList está definido
+            if (this.$refs.ticketsList) {
+                // Cargar los tickets almacenados en el almacenamiento local
+                const storedData = JSON.parse(localStorage.getItem('ticketsData')) || {};
+                for (const docId in storedData) {
+                    if (Object.prototype.hasOwnProperty.call(storedData, docId)) {
+                        const dataObj = storedData[docId];
+                        // Agregar los datos al arreglo desserts
+                        this.desserts.push(dataObj);
+                        // Crear el elemento de ticket en la interfaz
+                        this.createTicketDiv(dataObj, docId);
+                    }
                 }
             }
         },
+
 
         initialize() {
             this.desserts = [
@@ -390,27 +410,36 @@ export default {
         },
 
         deleteItem(item) {
-            this.editedIndex = this.desserts.indexOf(item)
-            this.editedItem = Object.assign({}, item)
-            this.dialogDelete = true
+            this.editedIndex = this.desserts.indexOf(item);
+            this.editedItem = Object.assign({}, item);
+            this.ticketToDeleteId = item.keyid; // Asigna el ID del ticket a eliminar
+            this.dialogDelete = true; // Abre el diálogo de eliminación
         },
 
+
         async deleteItemConfirm() {
-            // Obtén el ID del ticket a eliminar
-            const id = this.editedItem.keyid;
+            const idToDelete = this.ticketToDeleteId; // Utiliza el ID almacenado en ticketToDeleteId
 
-            // Obtén el div del ticket de la lista
-            const ticketDiv = this.$refs.ticketsList.querySelector(`[data-id="${id}"]`);
+            // Busca el índice del elemento en el arreglo desserts
+            const indexToDelete = this.desserts.findIndex(item => item.keyid === idToDelete);
 
-            // Verifica si el div del ticket existe
-            if (ticketDiv) {
-                // Elimina el div del ticket de la lista
-                this.$refs.ticketsList.removeChild(ticketDiv);
+            if (indexToDelete !== -1) {
+                // Elimina el elemento del arreglo desserts
+                this.desserts.splice(indexToDelete, 1);
+
+                // Elimina el ticket de la base de datos
+                await deleteDoc(doc(db, "tickets", idToDelete));
+            } else {
+                // Si el elemento no existe en el arreglo, muestra un mensaje de error
+                console.error('El elemento a eliminar no existe en el arreglo desserts');
             }
 
             // Limpia el formulario
             this.editedItem = this.defaultItem;
             this.editedIndex = -1;
+
+            // Cierra el diálogo de eliminación
+            this.dialogDelete = false;
         },
 
 

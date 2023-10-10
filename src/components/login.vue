@@ -6,25 +6,30 @@
                 <p class="text2">Create and account to Join Our <br> community</p>
             </div>
             <div class="derecha">
-                <v-img src="../assets/descarga.jpg" class="img1"></v-img>
-                <p class="text3">¡Hello! Welcome back</p>
-                <div class="login">
-                            <p style="justify-content: left; display:flex; color:#504C4B; margin-bottom:2%;">Username</p>
-                            <v-text-field v-model="username" placeholder="Username ">
-                                <v-icon style="margin-right: 2%;">
-                                    mdi mdi-account
-                                </v-icon>
-                            </v-text-field>
-                            <p style="justify-content: left; display:flex; color:#504C4B; margin-bottom:2%;">Password</p>
-                            <v-text-field v-model="password" type="password" placeholder="Password">
-                                <v-icon style="margin-right: 2%;">
-                                    mdi mdi-lock
-                                </v-icon>
-                            </v-text-field>
+                <v-card>
+                    <v-img src="../assets/descarga.jpg" class="img1"></v-img>
+                    <p class="text3">¡Hello! Welcome back</p>
+                    <div class="login">
+                        <p style="justify-content: left; display:flex; color:#504C4B; margin-bottom:2%;">Username</p>
+                        <v-text-field v-model="username" placeholder="Username ">
+                            <v-icon style="margin-right: 2%;">
+                                mdi mdi-account
+                            </v-icon>
+                        </v-text-field>
+                        <p style="justify-content: left; display:flex; color:#504C4B; margin-bottom:2%;">Password</p>
+                        <v-text-field v-model="password" :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+                            :type="visible ? 'text' : 'password'"  placeholder="Contraseña"
+                             @click:append-inner="visible = !visible">
+                            <v-icon style="margin-right: 2%;">
+                                mdi mdi-lock
+                            </v-icon>
+                        </v-text-field>
                         <v-checkbox label="Remember me"
                             style="margin-top: -7%; margin-bottom:-8%; color:black; font-size: 90%;"></v-checkbox>
-                        <v-btn  block class="mt-2" @click="login" style=" background-color:#5C7CF2; color:white;">login</v-btn>
-                </div>
+                        <v-btn block class="mt-2" @click="login"
+                            style=" background-color:#5C7CF2; color:white;">login</v-btn>
+                    </div>
+                </v-card>
             </div>
         </div>
     </div>
@@ -32,44 +37,53 @@
 
 <script>
 import db from '../firebase/init.js'
-import { collection, getDocs, query, where } from 'firebase/firestore'
+import { collection, query, where, getDocs } from 'firebase/firestore'
 
 export default {
-    name:'login_1',
-    data:()=>({
-        visible:false,
-        username:'',
-        password:''
-    }),
-    methods:{
-        async buscarUsuarioDesdeFirebase(usuario,clave) {
-            const q=query(
-                collection(db,'usuario'),
-                where("Usuario",'==', usuario),
-                where("Clave",'==', clave),
-            );
-            const resul=await getDocs(q);
-            console.log(resul.docs[0]);
-            if (!resul.empty) {
-                localStorage.setItem('userId',resul.docs[0].id);
-                return resul.docs[0].data();
-            }
-            return null;
-        },
+  name: 'Login_1',
+  data: () => ({
+    
+    visible: false,
+    username: '',
+    password: ''
+  }),
 
-        async login() {
-            const user=await this.buscarUsuarioDesdeFirebase(this.username,this.password);
-            console.log(user);
-            if (user) {
-                alert('Has iniciado sesión correctamente');
-                this.$store.dispatch('setUser',user)
-                this.$store.commit('setUserAuthenticated',true)
-                this.$store.push('/Home')
-            } else {
-                alert('Credenciales incorrectas')
-            }
-        }
+  methods: {
+    async buscarUsuarioDesdeFirebase(usuario, clave) {
+      const q = query(
+        collection(db, "usuario"),
+        where("usuario", "==", usuario),
+        where("clave", "==", clave)
+      );
+      const resul = await getDocs(q);
+      console.log(resul.docs[0]);
+      if (!resul.empty) {
+        // Almacena el ID del usuario en localStorage
+        localStorage.setItem('userId', resul.docs[0]);
+        // Si hay algún resultado, entonces el usuario y la clave son correctos
+        return resul.docs[0].data();
+      }
+      // Si no hay resultados, entonces no hay coincidencia
+      return null;
     },
+
+    async login() {
+      const user = await this.buscarUsuarioDesdeFirebase(this.username, this.password);
+
+      if (user) {
+        // alert('Inicio de sesión exitoso');
+        // Almacena al usuario en el store
+        console.log(user);
+        this.$store.dispatch('setUser', user);
+        this.$store.commit('setUserAuthenticated', true);  // Para marcar al usuario como autenticado
+        this.$router.push('/Home');// Redirección
+      } else {
+        alert('Credenciales incorrectas');
+        /* this.$store.commit('setUserAuthenticated', false); */ // Para marcar al usuario como no autenticado
+      }
+    }
+  },
+
 }
 </script>
 
