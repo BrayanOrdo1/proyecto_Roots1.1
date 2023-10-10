@@ -3,23 +3,21 @@
         <div class="Div_Lateral">
             <v-dialog v-model="dialog">
                 <template v-slot:activator="{ props }">
-                    <v-btn id="btn" v-bind="props" style="border-radius: 9999px; border-width: 1px;">+ agregar
-                        cliente
-                    </v-btn>
-                    <v-btn id="btn" @click="imprimir()">
-                        imprimir
-                    </v-btn>
+                    <v-btn v-bind="props" class="bt31" size="small" color="#8c52cc" style=" border-radius: 9999px; border-width: 1px; height: 50px; width: 30%; margin-top: 3%; margin-left: 5%; ">
+                        + AGREGAR CLIENTE
+                                </v-btn>
+              
                 </template>
                 <v-card-title>
                     <span class="text-h5">{{ formTitle }}</span>
                 </v-card-title>
             </v-dialog>
 
-            <v-select style="margin:0 auto;margin-top: 15px;width: 90%; background-color: white;" clearable
+            <v-select style="width: 80%; background-color: rgb(0, 0, 0); color :white; margin-top: 4%; margin-left: 5%; " clearable
                 label="Departamentos" :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']"
                 variant="outlined">
             </v-select>
-            <v-select color="primary" style="margin:0 auto;width: 90%;background-color: white;" clearable label="Ciudad"
+            <v-select color="primary" style="width: 80%; background-color: rgb(0, 0, 0); color :white; margin-top: 4%; margin-left: 5%;" clearable label="Ciudad"
                 :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']" variant="outlined">
             </v-select>
 
@@ -29,23 +27,29 @@
             <v-responsive max-width="550">
                 <v-autocomplete :items="desserts" auto-select-first class="flex-full-width" density="comfortable" item-props
                     menu-icon="" placeholder="Depatamento, ciudad o cliente por buscar" prepend-inner-icon="mdi-magnify"
-                    rounded theme="light" variant="solo"></v-autocomplete>
+                    rounded theme="light" variant="solo" style="    position: relative;
+    float: left;
+    width: 70%;
+    margin-top: 20px; margin-left: 5%;"></v-autocomplete>
             </v-responsive>
+            <v-btn v-bind="props" class="bt31" size="small" color="#8c52cc" style=" border-radius: 9999px; border-width: 1px; height: 50px; width: 12%; margin-top: -6%; margin-right: 2%; float: right;" @click="imprimir()">
+                                    Imprimir
+                                </v-btn>
 
-            <v-card class="mx-auto" style="text-align: center;" max-width="1200">
+            <v-card class="mx-auto" style="text-align: center; background-color: black; color: white;" max-width="1200">
                 <v-card-title>
                     Lista de clientes
                 </v-card-title>
-                <v-divider></v-divider>
+                <v-divider ></v-divider>
                 <v-data-table :headers="headers" :items="desserts" :sort-by="[{ order: 'asc' }]" class="elevation-1"
-                    style="height: 600px;">
+                    style="height: 720px; background-color: rgb(0, 0, 0); color: white; ">
                     <template v-slot:top>
-                        <v-dialog v-model="dialog">
-                            <v-card>
-                                <v-card-text>
+                        <v-dialog v-model="dialog"  >
+                            <v-card >
+                                <v-card-text >
                                     <v-container>
-                                        <v-row>
-                                            <v-col cols="12" sm="6" md="4">
+                                        <v-row >
+                                            <v-col cols="12" sm="6" md="4" >
                                                 <v-text-field v-model="editedItem.id" label="Codigo"></v-text-field>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
@@ -323,6 +327,7 @@ export default {
     position: relative;
 }
 
+
 #left {
     width: 100%;
     height: 650px;
@@ -350,5 +355,13 @@ export default {
 
 .right {
     border: 1px solid;
+}
+.v-table--density-default > .v-table__wrapper > table > tbody > tr > th, .v-table--density-default > .v-table__wrapper > table > thead > tr > th, .v-table--density-default > .v-table__wrapper > table > tfoot > tr > th {
+    background-color: black;
+    color: white;
+}
+.v-table--density-default > .v-table__wrapper > table > tbody > tr > td, .v-table--density-default > .v-table__wrapper > table > thead > tr > td, .v-table--density-default > .v-table__wrapper > table > tfoot > tr > td {
+    background-color: black;
+  
 }
 </style>
