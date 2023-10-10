@@ -34,11 +34,11 @@
           <v-list-item prepend-avatar="https://randomuser.me/api/portraits/lego/7.jpg" class="coso"></v-list-item>
           <h1 class="cosita">
             <v-btn type="button" class="btn btn-outline-primary mx-2" router-link to="/login" data-bs-toggle="modal">
-               Log in
+               Inicia sesión
             </v-btn>
             <!-- Cerrar sesión -->
-            <v-btn class="btn btn-outline-danger me-2" data-bs-toggle="modal" @click="signout">
-              Log out
+            <v-btn class="btn btn-outline-danger me-2" data-bs-toggle="modal" @click="logout">
+              Cerrar sesión
             </v-btn>
             <v-btn class="btn btn-outline-danger me-2" router-link to="/Home" data-bs-toggle="modal">
               regresar a inicio
@@ -72,8 +72,15 @@ export default {
   },
   computed: {
     ...mapGetters(['existeUsuario'])
+  },
+
+  methods: {
+    logout() {
+      this.$store.dispatch('logout'); // Llama a la acción 'logout' del store para limpiar los datos del usuario y marcarlo como no autenticado
+      this.$router.push('/home');   // Redirecciona al usuario a la página de inicio de sesión
+    }
   }
-}
+};
 </script>
 <style>
 .div_superior {
