@@ -10,13 +10,13 @@
                     <v-img src="../assets/descarga.jpg" class="img1"></v-img>
                     <p class="text3">¡Hello! Welcome back</p>
                     <div class="login">
-                        <p style="justify-content: left; display:flex; color:#504C4B; margin-bottom:2%;">Username</p>
+                        <p style="justify-content: left; display:flex; color:#504C4B; margin-bottom:2%;">Usuario</p>
                         <v-text-field v-model="username" placeholder="Username ">
                             <v-icon style="margin-right: 2%;">
                                 mdi mdi-account
                             </v-icon>
                         </v-text-field>
-                        <p style="justify-content: left; display:flex; color:#504C4B; margin-bottom:2%;">Password</p>
+                        <p style="justify-content: left; display:flex; color:#504C4B; margin-bottom:2%;">Contraseña</p>
                         <v-text-field v-model="password" :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
                             :type="visible ? 'text' : 'password'"  placeholder="Contraseña"
                              @click:append-inner="visible = !visible">
