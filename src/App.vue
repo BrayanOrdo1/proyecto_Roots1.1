@@ -28,22 +28,23 @@
       <v-app-bar>
         <div class="div_superior">
           <div id="titulo">
-          <h1>Welcome</h1>
-        </div>
-        <div id="user">
-          <v-list-item prepend-avatar="https://randomuser.me/api/portraits/lego/7.jpg" class="coso"></v-list-item>
-          <h1 class="cosita">
-            <v-btn type="button" class="btn btn-outline-primary mx-2" router-link to="/login" data-bs-toggle="modal">
-               Inicia sesión
-            </v-btn>
-            <!-- Cerrar sesión -->
-            <v-btn class="btn btn-outline-danger me-2" data-bs-toggle="modal" @click="logout">
-              Cerrar sesión
-            </v-btn>
-            <v-btn class="btn btn-outline-danger me-2" router-link to="/Home" data-bs-toggle="modal">
-              regresar a inicio
-            </v-btn>
-          </h1>
+            <h1>Welcome</h1>
+          </div>
+          <div id="user">
+            <v-list-item prepend-avatar="https://randomuser.me/api/portraits/lego/7.jpg" class="coso"></v-list-item>
+            <h1 class="cosita">
+              <v-btn  type="button" class="btn btn-outline-primary mx-2" router-link to="/login"
+                data-bs-toggle="modal">
+                Inicia sesión
+              </v-btn>
+              <!-- Cerrar sesión -->
+              <v-btn  class="btn btn-outline-danger me-2" data-bs-toggle="modal" @click="logout">
+                Cerrar sesión
+              </v-btn>
+              <v-btn class="btn btn-outline-danger me-2" router-link to="/Home" data-bs-toggle="modal">
+                regresar a inicio
+              </v-btn>
+            </h1>
           </div>
         </div>
       </v-app-bar>
@@ -54,14 +55,13 @@
 
 <script>
 
-import { mapGetters } from 'vuex'
 
 export default {
   name: 'App',
-  
+
 
   components: {
-    
+
   },
 
   data() {
@@ -70,17 +70,25 @@ export default {
       rail: true,
     }
   },
-  computed: {
-    ...mapGetters(['existeUsuario'])
-  },
 
   methods: {
     logout() {
-      this.$store.dispatch('logout'); // Llama a la acción 'logout' del store para limpiar los datos del usuario y marcarlo como no autenticado
-      this.$router.push('/home');   // Redirecciona al usuario a la página de inicio de sesión
-    }
+      this.$store.dispatch('logout');
+      this.$router.push('/home');
+    },
+    onLogin() {
+      // Marca al usuario como autenticado
+      this.$store.commit('setExisteUsuario', true);
+    },
+  },
+  mounted() {
+    this.$store.subscribe((mutation, ) => {
+      if (mutation.type === 'login') {
+        this.onLogin();
+      }
+    });
   }
-};
+}
 </script>
 <style>
 .div_superior {
@@ -91,6 +99,7 @@ export default {
   color: white;
   position: absolute;
 }
+
 .coso {
   float: right;
   margin-top: -2.3%;
@@ -104,11 +113,12 @@ export default {
   font-size: 180%;
   position: relative;
 }
-.ft{
+
+.ft {
   background-color: red;
   height: 80%;
 }
+
 .v-navigation-drawer.active {
   background-color: black;
-}
-</style>
+}</style>
