@@ -13,51 +13,56 @@
 
                 </div>
                 <div class="ultimate" style="margin-left: -8%;">
-                <div class="Ultimo_Div" >
-                    <p style="color: #7ed597; position: relative; float: right; margin-right: 10%; margin-top: 5%;">
-                     Terminada
-                    </p>
-                    <p style="color: #8e8e8e;; position: relative; float: right; margin-right: -20%; margin-top: 12%;"> Cortada</p>
-                    <h1 style="font-size: 110%; margin-left: 10%; margin-top:8%; color: white;">Pares: 150</h1>
-                    <p class="p21" style="margin-top: 0%; margin-left: 10%; font-size: 80%;">Resumen Semanal</p>
+                    <div class="Ultimo_Div">
+                        <p style="color: #7ed597; position: relative; float: right; margin-right: 10%; margin-top: 5%;">
+                            Terminada
+                        </p>
+                        <p style="color: #8e8e8e;; position: relative; float: right; margin-right: -20%; margin-top: 12%;">
+                            Cortada</p>
+                        <h1 style="font-size: 110%; margin-left: 10%; margin-top:8%; color: white;">Pares: 150</h1>
+                        <p class="p21" style="margin-top: 0%; margin-left: 10%; font-size: 80%;">Resumen Semanal</p>
+                    </div>
+                    <div class="Ultimo_Div">
+                        <p style="color: #7ed597; position: relative; float: right; margin-right: 10%; margin-top: 5%;">
+                            Terminada
+                        </p>
+                        <p style="color: #8e8e8e;; position: relative; float: right; margin-right: -20%; margin-top: 12%;">
+                            Cortada</p>
+                        <h1 style="font-size: 110%; margin-left: 10%; margin-top:8%; color: white;">Pares: 150</h1>
+                        <p class="p21" style="margin-top: 0%; margin-left: 10%; font-size: 80%;">Resumen Semanal</p>
+                    </div>
+                    <div class="Ultimo_Div">
+                        <p style="color: #7ed597; position: relative; float: right; margin-right: 10%; margin-top: 5%;">
+                            Terminada
+                        </p>
+                        <p style="color: #8e8e8e;; position: relative; float: right; margin-right: -20%; margin-top: 12%;">
+                            Cortada</p>
+                        <h1 style="font-size: 110%; margin-left: 10%; margin-top:8%; color: white;">Pares: 150</h1>
+                        <p class="p21" style="margin-top: 0%; margin-left: 10%; font-size: 80%;">Resumen Semanal</p>
+                    </div>
+                    <div class="Ultimo_Div">
+                        <p style="color: #7ed597; position: relative; float: right; margin-right: 10%; margin-top: 5%;">
+                            Terminada
+                        </p>
+                        <p style="color: #8e8e8e;; position: relative; float: right; margin-right: -20%; margin-top: 12%;">
+                            Cortada</p>
+                        <h1 style="font-size: 110%; margin-left: 10%; margin-top:8%; color: white;">Pares: 150</h1>
+                        <p class="p21" style="margin-top: 0%; margin-left: 10%; font-size: 80%;">Resumen Semanal</p>
+                    </div>
+                    <div class="Ultimo_Div">
+                        <p style="color: #7ed597; position: relative; float: right; margin-right: 10%; margin-top: 5%;">
+                            Terminada
+                        </p>
+                        <p style="color: #8e8e8e;; position: relative; float: right; margin-right: -20%; margin-top: 12%;">
+                            Cortada</p>
+                        <h1 style="font-size: 110%; margin-left: 10%; margin-top:8%; color: white;">Pares: 150</h1>
+                        <p class="p21" style="margin-top: 0%; margin-left: 10%; font-size: 80%;">Resumen Semanal</p>
+                    </div>
+
+                    <!-- favor no quitar este div ya que ayuda con estilos no usar el div de abajo -->
+                    <div class="Ultimo_Div" style="height: 70%; background-color:transparent; border: 0px transparent; ">
+                    </div>
                 </div>
-                <div class="Ultimo_Div">
-                    <p style="color: #7ed597; position: relative; float: right; margin-right: 10%; margin-top: 5%;">
-                     Terminada
-                    </p>
-                    <p style="color: #8e8e8e;; position: relative; float: right; margin-right: -20%; margin-top: 12%;"> Cortada</p>
-                    <h1 style="font-size: 110%; margin-left: 10%; margin-top:8%; color: white;">Pares: 150</h1>
-                    <p class="p21" style="margin-top: 0%; margin-left: 10%; font-size: 80%;">Resumen Semanal</p>
-                </div>
-                <div class="Ultimo_Div">
-                    <p style="color: #7ed597; position: relative; float: right; margin-right: 10%; margin-top: 5%;">
-                     Terminada
-                    </p>
-                    <p style="color: #8e8e8e;; position: relative; float: right; margin-right: -20%; margin-top: 12%;"> Cortada</p>
-                    <h1 style="font-size: 110%; margin-left: 10%; margin-top:8%; color: white;">Pares: 150</h1>
-                    <p class="p21" style="margin-top: 0%; margin-left: 10%; font-size: 80%;">Resumen Semanal</p>
-                </div>
-                <div class="Ultimo_Div">
-                    <p style="color: #7ed597; position: relative; float: right; margin-right: 10%; margin-top: 5%;">
-                     Terminada
-                    </p>
-                    <p style="color: #8e8e8e;; position: relative; float: right; margin-right: -20%; margin-top: 12%;"> Cortada</p>
-                    <h1 style="font-size: 110%; margin-left: 10%; margin-top:8%; color: white;">Pares: 150</h1>
-                    <p class="p21" style="margin-top: 0%; margin-left: 10%; font-size: 80%;">Resumen Semanal</p>
-                </div>
-                <div class="Ultimo_Div">
-                    <p style="color: #7ed597; position: relative; float: right; margin-right: 10%; margin-top: 5%;">
-                     Terminada
-                    </p>
-                    <p style="color: #8e8e8e;; position: relative; float: right; margin-right: -20%; margin-top: 12%;"> Cortada</p>
-                    <h1 style="font-size: 110%; margin-left: 10%; margin-top:8%; color: white;">Pares: 150</h1>
-                    <p class="p21" style="margin-top: 0%; margin-left: 10%; font-size: 80%;">Resumen Semanal</p>
-                </div>
-              
-                <!-- favor no quitar este div ya que ayuda con estilos no usar el div de abajo -->
-                <div class="Ultimo_Div" style="height: 70%; background-color:transparent; border: 0px transparent; ">
-                </div>
-            </div>
 
             </div>
         </div>
@@ -75,8 +80,7 @@
 
                                 <v-btn v-bind="props" class="bt1" size="small" color="#8c52cc"
                                     style="border-radius: 9999px; border-width: 1px;height: 50px; margin-top: 5%; margin-bottom: 7%;">
-                                    agregar
-                                    cliente
+                                    agregar ticket
                                 </v-btn>
                             </template>
                             <v-card-title>
@@ -84,7 +88,7 @@
                             </v-card-title>
                         </v-dialog>
                     </div>
-                    <p class="p21" style="margin-top: 3%; margin-left: 5%;" >Estado de Proceso</p>
+                    <p class="p21" style="margin-top: 3%; margin-left: 5%;">Estado de Proceso</p>
 
                     <h1 class="btn211" style="margin-top: -4%;">
 
@@ -94,8 +98,17 @@
                 </div>
                 <div class="MegaDiv2">
 
-                    
-                    <div class="Div">
+
+                    <div>
+                        <!-- Botón para agregar un nuevo ticket -->
+                        <button @click="dialog = true">Agregar Ticket</button>
+
+                        <!-- Lista de tickets -->
+                        <div ref="ticketsList">
+                            <!-- Aquí se mostrarán los divs de los tickets -->
+                        </div>
+
+                        <!-- Diálogo para agregar/editar un ticket -->
                         <v-dialog v-model="dialog">
                             <v-card>
                                 <v-card-text>
@@ -131,6 +144,18 @@
                                 </v-card>
                             </v-card>
                         </v-dialog>
+                        <v-dialog v-model="dialogDelete" max-width="500px">
+                            <v-card>
+                                <v-card-title class="text-h5" style="border-radius: 100px; text-align: center;">Estas seguro
+                                    de eliminar este cliente?</v-card-title>
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn color="blue-darken-1" variant="text" @click="closeDelete">Cancel</v-btn>
+                                    <v-btn color="blue-darken-1" variant="text" @click="deleteItemConfirm">OK</v-btn>
+                                    <v-spacer></v-spacer>
+                                </v-card-actions>
+                            </v-card>
+                        </v-dialog>
                     </div>
                 </div>
             </div>
@@ -138,8 +163,15 @@
     </div>
 </template>
 <script>
-import db from '../firebase/init.js'
-import { collection, getDocs, query, addDoc, doc, updateDoc, deleteDoc } from 'firebase/firestore'
+import db from '../firebase/init.js';
+import {
+    collection,
+    getDocs,
+    addDoc,
+    doc,
+    updateDoc,
+    deleteDoc
+} from 'firebase/firestore';
 
 export default {
     name: 'tickets_1',
@@ -163,27 +195,28 @@ export default {
         desserts: [],
         editedIndex: -1,
         editedItem: {
-            keyid: '',
-            id: '',
-            orden: '',
-            cliente: '',
+            keyid: ' ',
+            id: ' ',
+            orden: ' ',
+            cliente: ' ',
             referencia: '',
-            proceso: '',
-            pares: '',
+            proceso: ' ',
+            pares: ' ',
         },
         defaultItem: {
-            id: '',
-            orden: '',
-            cliente: '',
-            referencia: '',
-            proceso: '',
-            pares: '',
+            id: ' ',
+            orden: ' ',
+            cliente: ' ',
+            referencia: ' ',
+            proceso: ' ',
+            pares: ' ',
         },
     }),
 
+
     computed: {
         formTitle() {
-            return this.editedIndex === -1 ? ' ' : ' '
+            return this.editedIndex === -1 ? 'Agregar Ticket' : 'Editar Ticket';
         },
     },
 
@@ -197,43 +230,46 @@ export default {
     },
 
     created() {
-        this.listarticket()
+        // Llama a la función createTicketDiv() para crear los divs de los tickets
+        this.$nextTick(() => {
+            this.loadTicketsFromLocalStorage();
+            this.listarticket();
+        });
     },
 
     methods: {
         async listarticket() {
-            const q = query(collection(db, "tickets"));
+            // Cargar los tickets desde Firestore y mostrarlos en la lista
+            const q = collection(db, 'tickets');
             const resul = await getDocs(q);
             resul.forEach((doc) => {
-                console.log("id", doc.id);
-                this.desserts.push({
-                    keyid: doc.id,
+                const dataObj = {
                     id: doc.data().id,
                     orden: doc.data().orden,
                     cliente: doc.data().cliente,
                     referencia: doc.data().referencia,
                     proceso: doc.data().proceso,
                     pares: doc.data().pares,
-                })
-            })
+                };
+                this.createTicketDiv(dataObj, doc.id);
+            });
         },
 
         async Eliminartickets() {
-            console.log(this.editedItem.keyid)
-            const Ref = doc(db, "tickets", this.editedItem.keyid);
-            await deleteDoc(Ref, {
-                orden: this.editedItem.orden,
-                cliente: this.editedItem.cliente,
-                referencia: this.editedItem.referencia,
-                proceso: this.editedItem.proceso,
-                pares: this.editedItem.pares,
-            })
-                .then(console.log("Eliminado con exito"))
-                .catch(function (error) {
-                    console.log(error)
-                })
-        },
+            // Obtén el ID del ticket a eliminar
+            const id = this.editedItem.keyid;
 
+            // Obtén el div del ticket de la lista
+            const ticketDiv = this.$refs.ticketsList.querySelector(`[data-id="${id}"]`);
+            const parentElement = ticketDiv.parentElement;
+            if (parentElement) {
+                parentElement.removeChild(ticketDiv);
+            }
+
+
+            // Elimina el ticket de la base de datos
+            await deleteDoc(doc(db, "tickets", id));
+        },
 
         async Actualizartickets() {
             console.log("hola", this.editedItem.keyid)
@@ -252,6 +288,44 @@ export default {
                 });
         },
 
+        createTicketDiv(dataObj, docId) {
+            const newDiv = document.createElement('div');
+            newDiv.classList.add('Div');
+
+            newDiv.innerHTML = `
+            <div class="info-container">
+          <div>
+            <p> Id: ${dataObj.id} </p>
+            <p> Orden: ${dataObj.orden} </p>
+            <p> Cliente: ${dataObj.cliente} </p>
+          </div>
+          <div>
+            <p> Referencia: ${dataObj.referencia} </p>
+            <p> Proceso: ${dataObj.proceso} </p>
+            <p> Pares: ${dataObj.pares} </p>
+          </div>
+          <div class="actions">
+        <button class="btn btn-danger" @click="dialogDelete = true" data-id="${dataObj.id}">Eliminar Ticket</button>
+  </div>
+        </div>
+      `;
+
+            newDiv.dataset.key = docId;
+
+            const ticketsList = this.$refs.ticketsList;
+            if (ticketsList.firstChild) {
+                ticketsList.insertBefore(newDiv, ticketsList.firstChild);
+            } else {
+                ticketsList.appendChild(newDiv);
+            }
+            const btnDelete = newDiv.querySelector('.actions button');
+            btnDelete.addEventListener('click', () => {
+                this.dialogDelete = true;
+            });
+
+            return newDiv;
+        },
+
         async createtickets() {
             const colRef = collection(db, 'tickets');
             const dataObj = {
@@ -261,22 +335,49 @@ export default {
                 referencia: this.editedItem.referencia,
                 proceso: this.editedItem.proceso,
                 pares: this.editedItem.pares,
-            }
-            const docRef = await addDoc(colRef, dataObj)
-            console.log('Document was created with: ID:', docRef.id)
+            };
+            const docRef = await addDoc(colRef, dataObj);
+            console.log('Document was created with: ID:', docRef.id);
+            // Llamar a la función createTicketDiv para crear el nuevo div del ticket
+            this.createTicketDiv(dataObj, docRef.id);
+
+            // Almacenar los datos del nuevo ticket en el almacenamiento local del navegador
+            this.saveTicketToLocalData(docRef.id, dataObj);
+
+            // Limpiar el formulario
+            this.editedItem = this.defaultItem;
+            this.editedIndex = -1;
+
+            // Cerrar el diálogo
+            this.dialog = false;
         },
 
-
+        saveTicketToLocalData(docId, dataObj) {
+            // Guardar el ticket en el almacenamiento local
+            const storedData = JSON.parse(localStorage.getItem('ticketsData')) || {};
+            storedData[docId] = dataObj;
+            localStorage.setItem('ticketsData', JSON.stringify(storedData));
+        },
+        loadTicketsFromLocalStorage() {
+            // Cargar los tickets almacenados en el almacenamiento local
+            const storedData = JSON.parse(localStorage.getItem('ticketsData')) || {};
+            for (const docId in storedData) {
+                if (Object.prototype.hasOwnProperty.call(storedData, docId)) {
+                    const dataObj = storedData[docId];
+                    this.createTicketDiv(dataObj, docId);
+                }
+            }
+        },
 
         initialize() {
             this.desserts = [
                 {
-                    id: '',
-                    orden: '',
-                    cliente: '',
-                    referencia: '',
-                    proceso: '',
-                    pares: '',
+                    id: ' ',
+                    orden: ' ',
+                    cliente: ' ',
+                    referencia: ' ',
+                    proceso: ' ',
+                    pares: ' ',
                 },
 
             ]
@@ -294,18 +395,29 @@ export default {
             this.dialogDelete = true
         },
 
-        deleteItemConfirm() {
-            this.desserts.splice(this.editedIndex, 1)
-            this.closeDelete()
-            this.Eliminarcliente()
+        async deleteItemConfirm() {
+            // Obtén el ID del ticket a eliminar
+            const id = this.editedItem.keyid;
+
+            // Obtén el div del ticket de la lista
+            const ticketDiv = this.$refs.ticketsList.querySelector(`[data-id="${id}"]`);
+
+            // Verifica si el div del ticket existe
+            if (ticketDiv) {
+                // Elimina el div del ticket de la lista
+                this.$refs.ticketsList.removeChild(ticketDiv);
+            }
+
+            // Limpia el formulario
+            this.editedItem = this.defaultItem;
+            this.editedIndex = -1;
         },
 
+
         close() {
-            this.dialog = false
-            this.$nextTick(() => {
-                this.editedItem = Object.assign({}, this.defaultItem)
-                this.editedIndex = -1
-            })
+            this.dialog = false;
+            this.editedItem = { ...this.defaultItem };
+            this.editedIndex = -1;
         },
 
         closeDelete() {
@@ -318,16 +430,14 @@ export default {
 
         save() {
             if (this.editedIndex > -1) {
-                Object.assign(this.desserts[this.editedIndex], this.editedItem)
-                this.Actualizarcliente()
+                // Actualizar un ticket existente (debes implementar esta función)
+                this.Actualizartickets();
             } else {
-                this.desserts.push(this.editedItem),
-                    this.createUser()
-
+                // Crear un nuevo ticket
+                this.createtickets();
             }
-            this.close()
-        },
-    },
+        }
+    }
 }
 </script>
 <style>
@@ -336,6 +446,23 @@ export default {
     display: flex;
     background-color: #979694;
 }
+
+.info-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-container div {
+    display: inline-flex;
+}
+
+.info-container div p {
+    margin: 0;
+    letter-spacing: 0.2em;
+}
+
 
 .Div45 {
 
@@ -371,7 +498,6 @@ export default {
     margin-left: 35px;
     border-radius: 40PX;
     background-color: #1f1f1f;
-    display: flex;
     justify-content: space-between;
     padding: 10px;
     position: relative;
@@ -465,4 +591,5 @@ export default {
 
     position: relative;
     float: right;
-}</style>
+}
+</style>
