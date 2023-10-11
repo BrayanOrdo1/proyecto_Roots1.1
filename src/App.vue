@@ -33,12 +33,13 @@
           <div id="user">
             <v-list-item prepend-avatar="https://randomuser.me/api/portraits/lego/7.jpg" class="coso"></v-list-item>
             <h1 class="cosita">
-              <v-btn  type="button" class="btn btn-outline-primary mx-2" router-link to="/login"
-                data-bs-toggle="modal">
+              <!-- Botón de inicio de sesión con v-if -->
+              <v-btn v-if="!$store.state.isAuthenticated" type="button" class="btn btn-outline-primary mx-2"
+                router-link to="/login">
                 Inicia sesión
               </v-btn>
-              <!-- Cerrar sesión -->
-              <v-btn  class="btn btn-outline-danger me-2" data-bs-toggle="modal" @click="logout">
+              <!-- Botón de cerrar sesión con v-if -->
+              <v-btn v-if="$store.state.isAuthenticated" class="btn btn-outline-danger me-2" @click="logout">
                 Cerrar sesión
               </v-btn>
               <v-btn class="btn btn-outline-danger me-2" router-link to="/Home" data-bs-toggle="modal">
@@ -54,15 +55,9 @@
 </template>
 
 <script>
-
-
 export default {
   name: 'App',
-
-
-  components: {
-
-  },
+  components: {},
 
   data() {
     return {
@@ -70,23 +65,11 @@ export default {
       rail: true,
     }
   },
-
   methods: {
     logout() {
       this.$store.dispatch('logout');
       this.$router.push('/home');
     },
-    onLogin() {
-      // Marca al usuario como autenticado
-      this.$store.commit('setExisteUsuario', true);
-    },
-  },
-  mounted() {
-    this.$store.subscribe((mutation, ) => {
-      if (mutation.type === 'login') {
-        this.onLogin();
-      }
-    });
   }
 }
 </script>
@@ -121,4 +104,5 @@ export default {
 
 .v-navigation-drawer.active {
   background-color: black;
-}</style>
+}
+</style>
