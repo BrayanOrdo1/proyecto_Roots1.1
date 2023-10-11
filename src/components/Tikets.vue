@@ -70,9 +70,9 @@
             <div class="Div45">
                 <div class="div54">
                     <div id="buscador">
-                        <v-autocomplete :items="items" density="comfortable" item-props menu-icon=""
-                            placeholder="Search Google or type a URL" prepend-inner-icon="mdi-magnify" rounded theme="light"
-                            variant="solo" style="width: 80%;margin: 0 auto"></v-autocomplete>
+                        <v-text-field :items="desserts" v-model="search" :Search="search" density="comfortable" item-props
+                            menu-icon="" placeholder="Search Google or type a URL" prepend-inner-icon="mdi-magnify" rounded
+                            theme="light" variant="solo" style="width: 80%;margin: 0 auto"></v-text-field>
                     </div>
                     <div id="formulario">
                         <v-dialog v-model="dialog">
@@ -181,6 +181,7 @@ export default {
         dialog: false,
         dialogDelete: false,
         ticketDivs: [],
+        search: "",
         ticketToDeleteId: null,
         headers: [
             {
@@ -311,21 +312,24 @@ export default {
 
             newDiv.innerHTML = `
     <div class="info-container">
-      <div>
+      <div class="left-content">
         <p> Id: ${dataObj.id} </p>
         <p> Orden: ${dataObj.orden} </p>
         <p> Cliente: ${dataObj.cliente} </p>
       </div>
-      <div>
+      <div class="right-content">
         <p> Referencia: ${dataObj.referencia} </p>
         <p> Proceso: ${dataObj.proceso} </p>
         <p> Pares: ${dataObj.pares} </p>
       </div>
       <div class="actions">
-        <button class="btn btn-danger" style="color:white" @click="deleteItem(${dataObj.id})" data-id="${dataObj.id}">Eliminar Ticket</button>
+        <button style="color:white" class="delete" @click="deleteItem(dataObj.id)">Eliminar ticket</button>
+        <span style="margin-right: 10px;"></span>
+        <button style="color:white" class="edit" @click="editItem(dataObj)">Editar ticket</button>
       </div>
     </div>
   `;
+
 
             newDiv.dataset.key = docId;
 
@@ -336,11 +340,17 @@ export default {
                 ticketsList.appendChild(newDiv);
             }
 
-            const btnDelete = newDiv.querySelector('.actions button');
+            const btnDelete = newDiv.querySelector('.actions .delete');
             btnDelete.addEventListener('click', () => {
                 this.ticketToDeleteId = docId;
                 this.dialogDelete = true;
             });
+            const btnEdit = newDiv.querySelector('.actions .edit');
+            btnEdit.addEventListener('click', () => {
+                this.editedIndex = this.ticketDivs.findIndex(item => item.docId === docId);
+                this.editedItem = Object.assign({}, this.desserts[this.editedIndex]);
+                this.dialog = true;
+            })
 
             // Almacena la referencia al elemento div en el array
             this.ticketDivs.push({ docId, div: newDiv });
@@ -420,6 +430,7 @@ export default {
             this.editedIndex = this.desserts.indexOf(item)
             this.editedItem = Object.assign({}, item)
             this.dialog = true
+            console.log('Resultado de editItem:', item);
         },
 
         deleteItem(item) {
