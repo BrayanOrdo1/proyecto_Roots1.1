@@ -180,6 +180,7 @@ export default {
     data: () => ({
         dialog: false,
         dialogDelete: false,
+        ticketDivs: [],
         ticketToDeleteId: null,
         headers: [
             {
@@ -244,10 +245,10 @@ export default {
 
     methods: {
         async listarticket() {
-            // Cargar los tickets desde Firestore y mostrarlos en la lista
             const q = collection(db, 'tickets');
             const resul = await getDocs(q);
             resul.forEach((doc) => {
+                const docId = doc.id; // Aquí obtienes el ID del documento
                 const dataObj = {
                     id: doc.data().id,
                     orden: doc.data().orden,
@@ -256,30 +257,36 @@ export default {
                     proceso: doc.data().proceso,
                     pares: doc.data().pares,
                 };
-                this.createTicketDiv(dataObj, doc.id);
+                this.createTicketDiv(dataObj, docId);
             });
         },
 
-        async Eliminartickets() {
-            // Obtén el ID del ticket a eliminar
-            const id = this.editedItem.keyid;
 
-            // Obtén el div del ticket de la lista
-            const ticketDiv = this.$refs.ticketsList.querySelector(`[data-id="${id}"]`);
-            const parentElement = ticketDiv.parentElement;
-            if (parentElement) {
-                parentElement.removeChild(ticketDiv);
+        async Eliminarticket() {
+            const docId = this.ticketToDeleteId;
+            console.log("ID del documento a eliminar:", docId);
+
+            try {
+                const Ref = doc(db, "tickets", docId);
+                await deleteDoc(Ref);
+                console.log("Documento eliminado con éxito");
+
+                // Elimina el elemento de la interfaz
+                const index = this.ticketDivs.findIndex((item) => item.docId === docId);
+                if (index !== -1) {
+                    // Elimina el elemento del array y del DOM
+                    this.ticketDivs[index].div.remove();
+                    this.ticketDivs.splice(index, 1);
+                }
+
+            } catch (error) {
+                console.error("Error al eliminar el documento:", error);
             }
-
-            // Verifica si el div `ticketsList` existe
-            if (this.$refs.ticketsList) {
-                // Limpia el div
-                this.$refs.ticketsList.innerHTML = '';
-            }
-
-            // Elimina el ticket de la base de datos
-            await deleteDoc(doc(db, "tickets", id));
         },
+
+
+
+
 
         async Actualizartickets() {
             console.log("hola", this.editedItem.keyid)
@@ -303,22 +310,22 @@ export default {
             newDiv.classList.add('Div');
 
             newDiv.innerHTML = `
-            <div class="info-container">
-          <div>
-            <p> Id: ${dataObj.id} </p>
-            <p> Orden: ${dataObj.orden} </p>
-            <p> Cliente: ${dataObj.cliente} </p>
-          </div>
-          <div>
-            <p> Referencia: ${dataObj.referencia} </p>
-            <p> Proceso: ${dataObj.proceso} </p>
-            <p> Pares: ${dataObj.pares} </p>
-          </div>
-          <div class="actions">
-        <button class="btn btn-danger" @click="dialogDelete = true" data-id="${dataObj.id}">Eliminar Ticket</button>
-  </div>
-        </div>
-      `;
+    <div class="info-container">
+      <div>
+        <p> Id: ${dataObj.id} </p>
+        <p> Orden: ${dataObj.orden} </p>
+        <p> Cliente: ${dataObj.cliente} </p>
+      </div>
+      <div>
+        <p> Referencia: ${dataObj.referencia} </p>
+        <p> Proceso: ${dataObj.proceso} </p>
+        <p> Pares: ${dataObj.pares} </p>
+      </div>
+      <div class="actions">
+        <button class="btn btn-danger" style="color:white" @click="deleteItem(${dataObj.id})" data-id="${dataObj.id}">Eliminar Ticket</button>
+      </div>
+    </div>
+  `;
 
             newDiv.dataset.key = docId;
 
@@ -328,13 +335,19 @@ export default {
             } else {
                 ticketsList.appendChild(newDiv);
             }
+
             const btnDelete = newDiv.querySelector('.actions button');
             btnDelete.addEventListener('click', () => {
+                this.ticketToDeleteId = docId;
                 this.dialogDelete = true;
             });
 
+            // Almacena la referencia al elemento div en el array
+            this.ticketDivs.push({ docId, div: newDiv });
+
             return newDiv;
         },
+
 
         async createtickets() {
             const colRef = collection(db, 'tickets');
@@ -410,36 +423,15 @@ export default {
         },
 
         deleteItem(item) {
-            this.editedIndex = this.desserts.indexOf(item);
-            this.editedItem = Object.assign({}, item);
-            this.ticketToDeleteId = item.keyid; // Asigna el ID del ticket a eliminar
-            this.dialogDelete = true; // Abre el diálogo de eliminación
+            this.editedIndex = this.desserts.indexOf(item)
+            this.editedItem = Object.assign({}, item)
+            this.dialogDelete = true
         },
 
-
-        async deleteItemConfirm() {
-            const idToDelete = this.ticketToDeleteId; // Utiliza el ID almacenado en ticketToDeleteId
-
-            // Busca el índice del elemento en el arreglo desserts
-            const indexToDelete = this.desserts.findIndex(item => item.keyid === idToDelete);
-
-            if (indexToDelete !== -1) {
-                // Elimina el elemento del arreglo desserts
-                this.desserts.splice(indexToDelete, 1);
-
-                // Elimina el ticket de la base de datos
-                await deleteDoc(doc(db, "tickets", idToDelete));
-            } else {
-                // Si el elemento no existe en el arreglo, muestra un mensaje de error
-                console.error('El elemento a eliminar no existe en el arreglo desserts');
-            }
-
-            // Limpia el formulario
-            this.editedItem = this.defaultItem;
-            this.editedIndex = -1;
-
-            // Cierra el diálogo de eliminación
-            this.dialogDelete = false;
+        deleteItemConfirm() {
+            this.desserts.splice(this.editedIndex, 1)
+            this.closeDelete()
+            this.Eliminarticket(); // Corregir el nombre de la función a Eliminarticket
         },
 
 
