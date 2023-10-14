@@ -27,7 +27,7 @@ router.beforeEach((to, from, next) => {
     // Comprobar si la ruta requiere autenticación
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (!store.state.isAuthenticated) {
-            next('/home');  // Redirecciona al login
+            next('/');  // Redirecciona al login
             return;
         }
     }
