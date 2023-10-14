@@ -12,7 +12,6 @@
         <v-divider></v-divider>
 
         <v-list density="compact" nav>
-          <v-list-item prepend-icon="mdi mdi-home" title="Home" value="myfiles" router-link to='/Home'></v-list-item>
           <v-list-item prepend-icon="mdi mdi-content-cut" title="Tickets" value="shared" router-link
             to='/tickets'></v-list-item>
           <v-list-item prepend-icon="mdi mdi-cash-multiple" title="Nomina" value="nomina" router-link
@@ -31,19 +30,15 @@
             <h1>Welcome</h1>
           </div>
           <div id="user">
-            <v-list-item prepend-avatar="https://randomuser.me/api/portraits/lego/7.jpg" class="coso"></v-list-item>
             <h1 class="cosita">
               <!-- Botón de inicio de sesión con v-if -->
-              <v-btn v-if="!$store.state.isAuthenticated" type="button" class="btn btn-outline-primary mx-2"
-                router-link to="/login">
+              <v-btn v-if="!$store.state.isAuthenticated" type="button" class="btn btn-outline-primary mx-2" router-link
+                to="/login">
                 Inicia sesión
               </v-btn>
               <!-- Botón de cerrar sesión con v-if -->
               <v-btn v-if="$store.state.isAuthenticated" class="btn btn-outline-danger me-2" @click="logout">
                 Cerrar sesión
-              </v-btn>
-              <v-btn class="btn btn-outline-danger me-2" router-link to="/Home" data-bs-toggle="modal">
-                regresar a inicio
               </v-btn>
             </h1>
           </div>
@@ -52,12 +47,18 @@
     </v-layout>
 
   </v-card>
+  <div v-if="!$store.state.isAuthenticated">
+    <home />
+  </div>
 </template>
 
 <script>
+import home from './components/home.vue'
 export default {
   name: 'App',
-  components: {},
+  components: {
+    home
+  },
 
   data() {
     return {
@@ -68,7 +69,7 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch('logout');
-      this.$router.push('/home');
+      this.$router.push('/');
     },
   }
 }
