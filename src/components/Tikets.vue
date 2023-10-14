@@ -259,9 +259,10 @@ export default {
                     pares: doc.data().pares,
                 };
                 this.createTicketDiv(dataObj, docId);
+                // Asigna el docId a editedItem.keyid para editar el ticket
+                this.editedItem.keyid = docId;
             });
         },
-
 
         async Eliminarticket() {
             const docId = this.ticketToDeleteId;
@@ -285,25 +286,79 @@ export default {
             }
         },
 
+        async editarTicket() {
+            const docId = this.editedItem.keyid; // Obtén el ID del documento que deseas editar
+            console.log('ID a editar:', docId); // Agrega este console.log
+            const Ref = doc(db, "tickets", docId);
+
+            // Crea un objeto con los nuevos valores que deseas actualizar
+            const nuevosValores = {};
+            if (this.editedItem.id) {
+                nuevosValores.id = this.editedItem.id;
+            }
+
+            if (this.editedItem.orden) {
+                nuevosValores.orden = this.editedItem.orden;
+            }
+
+            if (this.editedItem.cliente) {
+                nuevosValores.cliente = this.editedItem.cliente;
+            }
+
+            if (this.editedItem.referencia) {
+                nuevosValores.referencia = this.editedItem.referencia;
+            }
+
+            if (this.editedItem.proceso) {
+                nuevosValores.proceso = this.editedItem.proceso;
+            }
+
+            if (this.editedItem.pares) {
+                nuevosValores.pares = this.editedItem.pares;
+            }
+
+            try {
+                await updateDoc(Ref, nuevosValores);
+                console.log('Documento actualizado con éxito');
+
+                // Actualiza los datos en la vista
+                this.updateTicketInView(docId, nuevosValores);
+
+            } catch (error) {
+                console.error('Error al actualizar el documento:', error);
+            }
+
+            this.dialog = false;
+        },
 
 
+        updateTicketInView(docId, nuevosValores) {
+            const ticketDiv = this.ticketDivs.find(item => item.docId === docId);
+            if (ticketDiv) {
+                const infoContainer = ticketDiv.div.querySelector('.info-container');
+                if (infoContainer) {
+                    // Actualiza solo los campos editados
+                    if (nuevosValores.id !== undefined) {
+                        infoContainer.querySelector('.left-content p:nth-child(1)').textContent = `id: ${nuevosValores.id}`;
+                    }
 
-
-        async Actualizartickets() {
-            console.log("hola", this.editedItem.keyid)
-            const Ref = doc(db, "tickets", this.editedItem.keyid);
-            await updateDoc(Ref, {
-                orden: this.editedItem.orden,
-                cliente: this.editedItem.cliente,
-                referencia: this.editedItem.referencia,
-                proceso: this.editedItem.proceso,
-                pares: this.editedItem.pares,
-            })
-                .then(console.log("Termino update usuario"))
-                .catch(function (error) {
-                    console.log(error)
-
-                });
+                    if (nuevosValores.orden !== undefined) {
+                        infoContainer.querySelector('.left-content p:nth-child(2)').textContent = `Orden: ${nuevosValores.orden}`;
+                    }
+                    if (nuevosValores.cliente !== undefined) {
+                        infoContainer.querySelector('.left-content p:nth-child(3)').textContent = `Cliente: ${nuevosValores.cliente}`;
+                    }
+                    if (nuevosValores.referencia !== undefined) {
+                        infoContainer.querySelector('.right-content p:nth-child(1)').textContent = `Referencia: ${nuevosValores.referencia}`;
+                    }
+                    if (nuevosValores.proceso !== undefined) {
+                        infoContainer.querySelector('.right-content p:nth-child(2)').textContent = `Proceso: ${nuevosValores.proceso}`;
+                    }
+                    if (nuevosValores.pares !== undefined) {
+                        infoContainer.querySelector('.right-content p:nth-child(3)').textContent = `Pares: ${nuevosValores.pares}`;
+                    }
+                }
+            }
         },
 
         createTicketDiv(dataObj, docId) {
@@ -349,6 +404,7 @@ export default {
             btnEdit.addEventListener('click', () => {
                 this.editedIndex = this.ticketDivs.findIndex(item => item.docId === docId);
                 this.editedItem = Object.assign({}, this.desserts[this.editedIndex]);
+                this.editedItem.keyid = docId;
                 this.dialog = true;
             })
 
@@ -427,10 +483,19 @@ export default {
         },
 
         editItem(item) {
-            this.editedIndex = this.desserts.indexOf(item)
-            this.editedItem = Object.assign({}, item)
-            this.dialog = true
-            console.log('Resultado de editItem:', item);
+            // Comprueba que this.desserts no sea undefined y que tenga elementos
+            if (this.desserts && this.desserts.length > 0) {
+                const index = this.desserts.indexOf(item);
+                if (index !== -1) {
+                    this.editedIndex = index;
+                    this.editedItem = Object.assign({}, item);
+                    this.dialog = true;
+                } else {
+                    console.log('Elemento no encontrado en desserts');
+                }
+            } else {
+                console.log('this.desserts no está definido o es un arreglo vacío');
+            }
         },
 
         deleteItem(item) {
@@ -462,13 +527,14 @@ export default {
 
         save() {
             if (this.editedIndex > -1) {
-                // Actualizar un ticket existente (debes implementar esta función)
-                this.Actualizartickets();
+                // Actualizar un ticket existente
+                this.editarTicket(); // Llama a la función para editar el ticket
             } else {
                 // Crear un nuevo ticket
                 this.createtickets();
             }
         }
+
     }
 }
 </script>

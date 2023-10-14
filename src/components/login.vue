@@ -76,7 +76,7 @@ export default {
         console.log(user);
         this.$store.dispatch('setUser', user);
         this.$store.commit('setUserAuthenticated', true);  // Para marcar al usuario como autenticado
-        this.$router.push('/Home');// Redirección
+        this.$router.push('/home');// Redirección
       } else {
         alert('Credenciales incorrectas');
         /* this.$store.commit('setUserAuthenticated', false); */ // Para marcar al usuario como no autenticado
