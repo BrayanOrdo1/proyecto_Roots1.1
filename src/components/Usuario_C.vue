@@ -293,4 +293,9 @@ export default {
     },
   },
 }
-</script> 
+</script>
+<style>
+.v-table--density-default > .v-table__wrapper > table > tbody > tr > td, .v-table--density-default > .v-table__wrapper > table > thead > tr > td, .v-table--density-default > .v-table__wrapper > table > tfoot > tr > td {
+  background-color: black;
+  color: white;
+}</style>
