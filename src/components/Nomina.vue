@@ -140,8 +140,7 @@
                         <p class="p29">Emplantillado #D</p>
                     </div>
                     <div class="box3">
-
-
+                        <v-img src="../assets/Foto1.png"></v-img> 
                         <v-btn class="p24" style="color: #8c52cc; background-color: transparent;" variant="plain">See
                             Details</v-btn>
                         <h1 class="h3">Pares: 23</h1>
