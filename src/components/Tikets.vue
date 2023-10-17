@@ -108,7 +108,7 @@
                             <!-- Aquí se mostrarán los divs de los tickets -->
                         </div>
 
-                        <!-- Diálogo para agregar/editar un ticket -->
+                        <!-- Diálogo para agregar un ticket -->
                         <v-dialog v-model="dialog">
                             <v-card>
                                 <v-card-text>
@@ -127,7 +127,43 @@
                                                 <v-text-field v-model="editedItem.referencia" label="Ref"></v-text-field>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="editedItem.proceso" label="Proceso"></v-text-field>
+                                                <v-text-field v-model="editedItem.pares" label="Pares"></v-text-field>
+                                            </v-col>
+                                        </v-row>
+                                    </v-container>
+                                </v-card-text>
+                                <v-card>
+                                    <v-card-actions>
+                                        <v-spacer></v-spacer>
+                                        <v-btn color="blue-darken-1" variant="text" @click="close">Cancel</v-btn>
+                                        <v-btn color="blue-darken-1" variant="text" @click="save">Save</v-btn>
+                                    </v-card-actions>
+                                </v-card>
+                            </v-card>
+                        </v-dialog>
+                        <!-- dialogo para editar el ticket -->
+                        <v-dialog v-model="dialogEdit">
+                            <v-card>
+                                <v-card-text>
+                                    <v-container>
+                                        <v-row>
+                                            <v-col cols="12" sm="6" md="4">
+                                                <v-text-field v-model="editedItem.id" label="id"></v-text-field>
+                                            </v-col>
+                                            <v-col cols="12" sm="6" md="4">
+                                                <v-text-field v-model="editedItem.orden" label="orden"></v-text-field>
+                                            </v-col>
+                                            <v-col cols="12" sm="6" md="4">
+                                                <v-text-field v-model="editedItem.cliente" label="cliente"></v-text-field>
+                                            </v-col>
+                                            <v-col cols="12" sm="6" md="4">
+                                                <v-text-field v-model="editedItem.referencia" label="Ref"></v-text-field>
+                                            </v-col>
+                                            <v-col cols="12" sm="6" md="4">
+                                                <v-select v-model="editedItem.proceso" label="Proceso"
+                                                    :items="['Cortada', 'Armada', 'Costura', 'Montada', 'Emplantillado']"
+                                                    @change="guardarSeleccionEnBaseDeDatos"></v-select>
+
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
                                                 <v-text-field v-model="editedItem.pares" label="Pares"></v-text-field>
@@ -179,6 +215,7 @@ export default {
     name: 'tickets_1',
     data: () => ({
         dialog: false,
+        dialogEdit: false,
         dialogDelete: false,
         ticketDivs: [],
         search: "",
@@ -227,6 +264,9 @@ export default {
 
     watch: {
         dialog(val) {
+            val || this.close()
+        },
+        dialogEdit(val) {
             val || this.close()
         },
         dialogDelete(val) {
@@ -287,32 +327,25 @@ export default {
         },
 
         async editarTicket() {
-            const docId = this.editedItem.keyid; // Obtén el ID del documento que deseas editar
-            console.log('ID a editar:', docId); // Agrega este console.log
+            const docId = this.editedItem.keyid;
             const Ref = doc(db, "tickets", docId);
 
-            // Crea un objeto con los nuevos valores que deseas actualizar
             const nuevosValores = {};
             if (this.editedItem.id) {
                 nuevosValores.id = this.editedItem.id;
             }
-
             if (this.editedItem.orden) {
                 nuevosValores.orden = this.editedItem.orden;
             }
-
             if (this.editedItem.cliente) {
                 nuevosValores.cliente = this.editedItem.cliente;
             }
-
             if (this.editedItem.referencia) {
                 nuevosValores.referencia = this.editedItem.referencia;
             }
-
             if (this.editedItem.proceso) {
-                nuevosValores.proceso = this.editedItem.proceso;
+                nuevosValores.proceso = this.editedItem.proceso;  // Actualiza el proceso
             }
-
             if (this.editedItem.pares) {
                 nuevosValores.pares = this.editedItem.pares;
             }
@@ -323,14 +356,50 @@ export default {
 
                 // Actualiza los datos en la vista
                 this.updateTicketInView(docId, nuevosValores);
-
             } catch (error) {
                 console.error('Error al actualizar el documento:', error);
             }
 
-            this.dialog = false;
+            this.dialogEdit = false;
         },
 
+        async moveProcess(dataObj, direction) {
+            // Encuentra el índice del elemento en this.desserts que coincide con dataObj
+            const index = this.desserts.findIndex((item) => item === dataObj);
+
+            if (index !== -1) {
+                const currentProcess = this.desserts[index].proceso;
+                const processes = ['Cortada', 'Armada', 'Costura', 'Montada', 'Emplantillado'];
+
+                if (direction === 'prev') {
+                    // Mueve el proceso hacia atrás
+                    const currentIndex = processes.indexOf(currentProcess);
+                    if (currentIndex > 0) {
+                        this.desserts[index].proceso = processes[currentIndex - 1];
+                    }
+                } else if (direction === 'next') {
+                    // Mueve el proceso hacia adelante
+                    const currentIndex = processes.indexOf(currentProcess);
+                    if (currentIndex < processes.length - 1) {
+                        this.desserts[index].proceso = processes[currentIndex + 1];
+                    }
+                }
+
+                // Actualiza el proceso en Firebase
+                const docId = this.desserts[index].docId;
+                const Ref = doc(db, "tickets", docId);
+                const nuevosValores = {
+                    proceso: this.desserts[index].proceso,
+                };
+
+                try {
+                    await updateDoc(Ref, nuevosValores);
+                    console.log('Proceso actualizado con éxito en Firebase');
+                } catch (error) {
+                    console.error('Error al actualizar el proceso en Firebase:', error);
+                }
+            }
+        },
 
         updateTicketInView(docId, nuevosValores) {
             const ticketDiv = this.ticketDivs.find(item => item.docId === docId);
@@ -374,7 +443,9 @@ export default {
       </div>
       <div class="right-content">
         <p> Referencia: ${dataObj.referencia} </p>
-        <p> Proceso: ${dataObj.proceso} </p>
+        <p> Proceso: ${dataObj.proceso}  
+        <button class="btnleft" @click="moveLeft(dataObj, 'prev')" style="color:white">⬅️</button>
+        <button class="btnright" @click="moveright(dataObj, 'next')" style="color:white">➡️</button></p>
         <p> Pares: ${dataObj.pares} </p>
       </div>
       <div class="actions">
@@ -405,8 +476,18 @@ export default {
                 this.editedIndex = this.ticketDivs.findIndex(item => item.docId === docId);
                 this.editedItem = Object.assign({}, this.desserts[this.editedIndex]);
                 this.editedItem.keyid = docId;
-                this.dialog = true;
+                this.dialogEdit = true;
             })
+            // Define las funciones para mover el proceso a la izquierda y a la derecha
+            const btnLeft = newDiv.querySelector('.right-content .btnleft');
+            btnLeft.addEventListener('click', () => {
+                this.moveProcess(dataObj, 'prev');
+            });
+
+            const btnRight = newDiv.querySelector('.right-content .btnright');
+            btnRight.addEventListener('click', () => {
+                this.moveProcess(dataObj, 'next');
+            });
 
             // Almacena la referencia al elemento div en el array
             this.ticketDivs.push({ docId, div: newDiv });
@@ -414,6 +495,26 @@ export default {
             return newDiv;
         },
 
+        guardarSeleccionEnBaseDeDatos() {
+            const docId = this.editedItem.keyid; // Obtén el ID del documento que deseas editar
+            const procesoSeleccionado = this.editedItem.proceso; // Obtiene la opción seleccionada
+
+            if (docId) {
+                const Ref = doc(db, "tickets", docId);
+                const nuevosValores = {
+                    proceso: procesoSeleccionado,
+                };
+
+                // Actualiza la opción seleccionada en la base de datos
+                updateDoc(Ref, nuevosValores)
+                    .then(() => {
+                        console.log('Proceso actualizado con éxito en la base de datos');
+                    })
+                    .catch((error) => {
+                        console.error('Error al actualizar el proceso en la base de datos:', error);
+                    });
+            }
+        },
 
         async createtickets() {
             const colRef = collection(db, 'tickets');
@@ -422,7 +523,7 @@ export default {
                 orden: this.editedItem.orden,
                 cliente: this.editedItem.cliente,
                 referencia: this.editedItem.referencia,
-                proceso: this.editedItem.proceso,
+                proceso: 'cortada',
                 pares: this.editedItem.pares,
             };
             const docRef = await addDoc(colRef, dataObj);
@@ -513,6 +614,7 @@ export default {
 
         close() {
             this.dialog = false;
+            this.dialogEdit = false;
             this.editedItem = { ...this.defaultItem };
             this.editedIndex = -1;
         },
