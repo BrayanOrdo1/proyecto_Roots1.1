@@ -3,7 +3,7 @@
         <div class="DivLateral1">
             <div class="box" style="margin-top: -12%; margin-left:13%;">
                 <p class="p" style="color: #7ed597;">En Proceso</p>
-                <h1 class="h1">Pares: 150</h1>
+                <h1 class="h1">Pares: {{ totalPares }}</h1>
                 <div class="parte_de_abajo">
 
                     <p class="p21" style="margin-top: 18%; width: 22%; margin-left: -10%">Transaction</p>
@@ -19,7 +19,8 @@
                         </p>
                         <p style="color: #8e8e8e;; position: relative; float: right; margin-right: -20%; margin-top: 12%;">
                             Cortada</p>
-                        <h1 style="font-size: 110%; margin-left: 10%; margin-top:8%; color: white;">Pares: 150</h1>
+                        <h1 ref="cortadaParesH1" style="font-size: 110%; margin-left: 10%; margin-top:8%; color: white;">
+                            Pares: {{ cortadaPares }}</h1>
                         <p class="p21" style="margin-top: 0%; margin-left: 10%; font-size: 80%;">Resumen Semanal</p>
                     </div>
                     <div class="Ultimo_Div">
@@ -27,8 +28,10 @@
                             Terminada
                         </p>
                         <p style="color: #8e8e8e;; position: relative; float: right; margin-right: -20%; margin-top: 12%;">
-                            Cortada</p>
-                        <h1 style="font-size: 110%; margin-left: 10%; margin-top:8%; color: white;">Pares: 150</h1>
+                            Armada</p>
+                        <h1 ref="armadaParesH1" style="font-size: 110%; margin-left: 10%; margin-top:8%; color: white;">
+                            Pares: {{ armadaPares }}
+                        </h1>
                         <p class="p21" style="margin-top: 0%; margin-left: 10%; font-size: 80%;">Resumen Semanal</p>
                     </div>
                     <div class="Ultimo_Div">
@@ -36,8 +39,9 @@
                             Terminada
                         </p>
                         <p style="color: #8e8e8e;; position: relative; float: right; margin-right: -20%; margin-top: 12%;">
-                            Cortada</p>
-                        <h1 style="font-size: 110%; margin-left: 10%; margin-top:8%; color: white;">Pares: 150</h1>
+                            Costura</p>
+                        <h1 style="font-size: 110%; margin-left: 10%; margin-top:8%; color: white;">Pares:{{ costuraPares }}
+                        </h1>
                         <p class="p21" style="margin-top: 0%; margin-left: 10%; font-size: 80%;">Resumen Semanal</p>
                     </div>
                     <div class="Ultimo_Div">
@@ -45,8 +49,10 @@
                             Terminada
                         </p>
                         <p style="color: #8e8e8e;; position: relative; float: right; margin-right: -20%; margin-top: 12%;">
-                            Cortada</p>
-                        <h1 style="font-size: 110%; margin-left: 10%; margin-top:8%; color: white;">Pares: 150</h1>
+                            Montada</p>
+                        <h1 style="font-size: 110%; margin-left: 10%; margin-top:8%; color: white;">Pares: {{ montadaPares
+                        }}
+                        </h1>
                         <p class="p21" style="margin-top: 0%; margin-left: 10%; font-size: 80%;">Resumen Semanal</p>
                     </div>
                     <div class="Ultimo_Div">
@@ -54,8 +60,9 @@
                             Terminada
                         </p>
                         <p style="color: #8e8e8e;; position: relative; float: right; margin-right: -20%; margin-top: 12%;">
-                            Cortada</p>
-                        <h1 style="font-size: 110%; margin-left: 10%; margin-top:8%; color: white;">Pares: 150</h1>
+                            Emplantillado</p>
+                        <h1 style="font-size: 110%; margin-left: 10%; margin-top:8%; color: white;">Pares:
+                            {{ emplantilladoPares }}</h1>
                         <p class="p21" style="margin-top: 0%; margin-left: 10%; font-size: 80%;">Resumen Semanal</p>
                     </div>
 
@@ -161,7 +168,7 @@
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
                                                 <v-select v-model="editedItem.proceso" label="Proceso"
-                                                    :items="['Cortada', 'Armada', 'Costura', 'Montada', 'Emplantillado']"
+                                                    :items="['Armada', 'Costura', 'Montada', 'Emplantillado']"
                                                     @change="guardarSeleccionEnBaseDeDatos"></v-select>
 
                                             </v-col>
@@ -202,14 +209,7 @@
 </template>
 <script>
 import db from '../firebase/init.js';
-import {
-    collection,
-    getDocs,
-    addDoc,
-    doc,
-    updateDoc,
-    deleteDoc
-} from 'firebase/firestore';
+import { collection, getDocs, addDoc, doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 
 export default {
     name: 'tickets_1',
@@ -218,7 +218,13 @@ export default {
         dialogEdit: false,
         dialogDelete: false,
         ticketDivs: [],
+        totalPares: 0,
         search: "",
+        cortadaPares: 0,  // Propiedad para el total de pares en "Cortada"
+        armadaPares: 0,   // Propiedad para el total de pares en "Armada"
+        costuraPares: 0,  // Propiedad para el total de pares en "Costura"
+        montadaPares: 0,  // Propiedad para el total de pares en "Montada"
+        emplantilladoPares: 0, // Propiedad para el total de pares en "Emplantillado"
         ticketToDeleteId: null,
         headers: [
             {
@@ -285,11 +291,31 @@ export default {
     },
 
     methods: {
+        // Este método calcula el total de pares sumando la propiedad "pares" de todos los tickets en Firebase
+        async calcularTotalPares() {
+            const q = collection(db, 'tickets');
+            const resul = await getDocs(q);
+            let total = 0;
+
+            resul.forEach((doc) => {
+                total += parseInt(doc.data().pares, 10);
+            });
+
+            this.totalPares = total;
+        },
+
         async listarticket() {
             const q = collection(db, 'tickets');
             const resul = await getDocs(q);
+            let total = 0;
+            let cortadaPares = 0;
+            let armadaPares = 0;
+            let costuraPares = 0;
+            let montadaPares = 0;
+            let emplantilladoPares = 0;
+
             resul.forEach((doc) => {
-                const docId = doc.id; // Aquí obtienes el ID del documento
+                const docId = doc.id;
                 const dataObj = {
                     id: doc.data().id,
                     orden: doc.data().orden,
@@ -298,18 +324,70 @@ export default {
                     proceso: doc.data().proceso,
                     pares: doc.data().pares,
                 };
+
+                total += parseInt(doc.data().pares, 10);
+
+                if (dataObj.proceso === 'Cortada') {
+                    cortadaPares += parseInt(dataObj.pares, 10);
+                }
+
+                if (dataObj.proceso === 'Armada') {
+                    armadaPares += parseInt(dataObj.pares, 10);
+                }
+
+                // Calcula el total de pares en "Costura"
+                if (dataObj.proceso === 'Costura') {
+                    costuraPares += parseInt(dataObj.pares, 10);
+                }
+
+                // Calcula el total de pares en "Montada"
+                if (dataObj.proceso === 'Montada') {
+                    montadaPares += parseInt(dataObj.pares, 10);
+                }
+
+                // Calcula el total de pares en "Emplantillado"
+                if (dataObj.proceso === 'Emplantillado') {
+                    emplantilladoPares += parseInt(dataObj.pares, 10);
+                }
+
                 this.createTicketDiv(dataObj, docId);
-                // Asigna el docId a editedItem.keyid para editar el ticket
                 this.editedItem.keyid = docId;
             });
+
+            this.totalPares = total;
+            this.cortadaPares = cortadaPares;
+            this.armadaPares = armadaPares;
+            this.costuraPares = costuraPares;
+            this.montadaPares = montadaPares;
+            this.emplantilladoPares = emplantilladoPares;
         },
 
         async Eliminarticket() {
             const docId = this.ticketToDeleteId;
-            console.log("ID del documento a eliminar:", docId);
 
             try {
                 const Ref = doc(db, "tickets", docId);
+                // Obtiene los datos del ticket antes de eliminarlo
+                const ticketSnapshot = await getDoc(Ref);
+                if (ticketSnapshot.exists()) {
+                    const dataObj = ticketSnapshot.data();
+                    // Resta la cantidad de pares del ticket eliminado del total
+                    this.totalPares -= parseInt(dataObj.pares, 10);
+
+                    // Actualiza los totales de pares para los procesos específicos
+                    if (dataObj.proceso === 'Cortada') {
+                        this.cortadaPares -= parseInt(dataObj.pares, 10);
+                    } else if (dataObj.proceso === 'Armada') {
+                        this.armadaPares -= parseInt(dataObj.pares, 10);
+                    } else if (dataObj.proceso === 'Costura') {
+                        this.costuraPares -= parseInt(dataObj.pares, 10);
+                    } else if (dataObj.proceso === 'Montada') {
+                        this.montadaPares -= parseInt(dataObj.pares, 10);
+                    } else if (dataObj.proceso === 'Emplantillado') {
+                        this.emplantilladoPares -= parseInt(dataObj.pares, 10);
+                    }
+                }
+                // Elimina el documento
                 await deleteDoc(Ref);
                 console.log("Documento eliminado con éxito");
 
@@ -321,10 +399,52 @@ export default {
                     this.ticketDivs.splice(index, 1);
                 }
 
+                // Actualiza los totales de pares después de eliminar el ticket
+                this.actualizarTotalesPares();
             } catch (error) {
                 console.error("Error al eliminar el documento:", error);
             }
         },
+
+        actualizarTotalesPares() {
+            // Esta función actualiza los totales de pares para los diferentes procesos
+            // y los totales generales.
+            let cortadaPares = 0;
+            let armadaPares = 0;
+            let costuraPares = 0;
+            let montadaPares = 0;
+            let emplantilladoPares = 0;
+
+            // Calcular los totales para cada proceso
+            for (const item of this.desserts) {
+                const pares = parseInt(item.pares, 10);
+                switch (item.proceso) {
+                    case 'Cortada':
+                        cortadaPares += pares;
+                        break;
+                    case 'Armada':
+                        armadaPares += pares;
+                        break;
+                    case 'Costura':
+                        costuraPares += pares;
+                        break;
+                    case 'Montada':
+                        montadaPares += pares;
+                        break;
+                    case 'Emplantillado':
+                        emplantilladoPares += pares;
+                        break;
+                }
+            }
+
+            // Actualizar los totales en el estado
+            this.cortadaPares = cortadaPares;
+            this.armadaPares = armadaPares;
+            this.costuraPares = costuraPares;
+            this.montadaPares = montadaPares;
+            this.emplantilladoPares = emplantilladoPares;
+        },
+
 
         async editarTicket() {
             const docId = this.editedItem.keyid;
@@ -344,7 +464,7 @@ export default {
                 nuevosValores.referencia = this.editedItem.referencia;
             }
             if (this.editedItem.proceso) {
-                nuevosValores.proceso = this.editedItem.proceso;  // Actualiza el proceso
+                nuevosValores.proceso = this.editedItem.proceso;
             }
             if (this.editedItem.pares) {
                 nuevosValores.pares = this.editedItem.pares;
@@ -356,49 +476,27 @@ export default {
 
                 // Actualiza los datos en la vista
                 this.updateTicketInView(docId, nuevosValores);
+                // Calcula el total de pares después de la edición
+                this.calcularTotalPares();
+
+                // Si el proceso editado es "Armada", actualiza el total de pares en el h1 de "Armada"
+                if (nuevosValores.proceso === 'Armada') {
+                    // Convierte la cantidad de pares a un número
+                    const nuevosPares = parseInt(this.editedItem.pares, 10);
+
+                    if (!isNaN(nuevosPares)) {
+
+                        // Actualiza el valor editado
+                        this.armadaPares += nuevosPares;
+                        // Actualiza el elemento <h1> en tiempo real
+                        this.$refs.armadaParesH1.innerText = `Armada: ${this.armadaPares}`;
+                    }
+                }
             } catch (error) {
                 console.error('Error al actualizar el documento:', error);
             }
 
             this.dialogEdit = false;
-        },
-
-        async moveProcess(dataObj, direction) {
-            // Encuentra el índice del elemento en this.desserts que coincide con dataObj
-            const index = this.desserts.findIndex((item) => item === dataObj);
-
-            if (index !== -1) {
-                const currentProcess = this.desserts[index].proceso;
-                const processes = ['Cortada', 'Armada', 'Costura', 'Montada', 'Emplantillado'];
-
-                if (direction === 'prev') {
-                    // Mueve el proceso hacia atrás
-                    const currentIndex = processes.indexOf(currentProcess);
-                    if (currentIndex > 0) {
-                        this.desserts[index].proceso = processes[currentIndex - 1];
-                    }
-                } else if (direction === 'next') {
-                    // Mueve el proceso hacia adelante
-                    const currentIndex = processes.indexOf(currentProcess);
-                    if (currentIndex < processes.length - 1) {
-                        this.desserts[index].proceso = processes[currentIndex + 1];
-                    }
-                }
-
-                // Actualiza el proceso en Firebase
-                const docId = this.desserts[index].docId;
-                const Ref = doc(db, "tickets", docId);
-                const nuevosValores = {
-                    proceso: this.desserts[index].proceso,
-                };
-
-                try {
-                    await updateDoc(Ref, nuevosValores);
-                    console.log('Proceso actualizado con éxito en Firebase');
-                } catch (error) {
-                    console.error('Error al actualizar el proceso en Firebase:', error);
-                }
-            }
         },
 
         updateTicketInView(docId, nuevosValores) {
@@ -443,9 +541,7 @@ export default {
       </div>
       <div class="right-content">
         <p> Referencia: ${dataObj.referencia} </p>
-        <p> Proceso: ${dataObj.proceso}  
-        <button class="btnleft" @click="moveLeft(dataObj, 'prev')" style="color:white">⬅️</button>
-        <button class="btnright" @click="moveright(dataObj, 'next')" style="color:white">➡️</button></p>
+        <p> Proceso: ${dataObj.proceso} </p>
         <p> Pares: ${dataObj.pares} </p>
       </div>
       <div class="actions">
@@ -478,17 +574,6 @@ export default {
                 this.editedItem.keyid = docId;
                 this.dialogEdit = true;
             })
-            // Define las funciones para mover el proceso a la izquierda y a la derecha
-            const btnLeft = newDiv.querySelector('.right-content .btnleft');
-            btnLeft.addEventListener('click', () => {
-                this.moveProcess(dataObj, 'prev');
-            });
-
-            const btnRight = newDiv.querySelector('.right-content .btnright');
-            btnRight.addEventListener('click', () => {
-                this.moveProcess(dataObj, 'next');
-            });
-
             // Almacena la referencia al elemento div en el array
             this.ticketDivs.push({ docId, div: newDiv });
 
@@ -523,27 +608,37 @@ export default {
                 orden: this.editedItem.orden,
                 cliente: this.editedItem.cliente,
                 referencia: this.editedItem.referencia,
-                proceso: 'cortada',
+                proceso: 'Cortada',
                 pares: this.editedItem.pares,
             };
             const docRef = await addDoc(colRef, dataObj);
-            console.log('Document was created with: ID:', docRef.id);
+            console.log('Document was created with ID:', docRef.id);
+
+            // Calcula el total de pares
+            this.totalPares += parseInt(this.editedItem.pares, 10);
+            // Actualiza el total de pares en "Cortada" en el h1
+            this.cortadaPares += parseInt(this.editedItem.pares, 10);
+
+            // Actualiza el h1 de "Cortada" en tiempo real
+            this.$refs.cortadaParesH1.innerText = `Pares: ${this.cortadaPares}`;
+
             // Llamar a la función createTicketDiv para crear el nuevo div del ticket
             this.createTicketDiv(dataObj, docRef.id);
 
             // Almacenar los datos del nuevo ticket en el almacenamiento local del navegador
             this.saveTicketToLocalData(docRef.id, dataObj);
+
             // Después de guardar los datos en el almacenamiento local y crear el elemento de ticket
             this.desserts.push(dataObj);
 
-
             // Limpiar el formulario
-            this.editedItem = this.defaultItem;
+            this.editedItem = { ...this.defaultItem };
             this.editedIndex = -1;
 
             // Cerrar el diálogo
             this.dialog = false;
         },
+
 
         saveTicketToLocalData(docId, dataObj) {
             // Guardar el ticket en el almacenamiento local
