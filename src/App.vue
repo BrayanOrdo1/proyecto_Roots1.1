@@ -14,8 +14,6 @@
         <v-list density="compact" nav>
           <v-list-item prepend-icon="mdi mdi-content-cut" title="Tickets" value="shared" router-link
             to='/tickets'></v-list-item>
-          <v-list-item prepend-icon="mdi mdi-cash-multiple" title="Nomina" value="nomina" router-link
-            to='/Nomina'></v-list-item>
           <v-list-item prepend-icon="mdi mdi-package-variant-closed" title="Inventario" value="Inventory" router-link
             to='/Inventario'></v-list-item>
           <v-list-item prepend-icon="mdi mdi-account-group" title="Clientes" value="clientes" router-link
