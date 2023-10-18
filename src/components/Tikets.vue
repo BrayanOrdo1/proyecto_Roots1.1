@@ -375,16 +375,24 @@ export default {
                     this.totalPares -= parseInt(dataObj.pares, 10);
 
                     // Actualiza los totales de pares para los procesos específicos
-                    if (dataObj.proceso === 'Cortada') {
-                        this.cortadaPares -= parseInt(dataObj.pares, 10);
-                    } else if (dataObj.proceso === 'Armada') {
-                        this.armadaPares -= parseInt(dataObj.pares, 10);
-                    } else if (dataObj.proceso === 'Costura') {
-                        this.costuraPares -= parseInt(dataObj.pares, 10);
-                    } else if (dataObj.proceso === 'Montada') {
-                        this.montadaPares -= parseInt(dataObj.pares, 10);
-                    } else if (dataObj.proceso === 'Emplantillado') {
-                        this.emplantilladoPares -= parseInt(dataObj.pares, 10);
+                    switch (dataObj.proceso) {
+                        case 'Cortada':
+                            this.cortadaPares -= parseInt(dataObj.pares, 10);
+                            break;
+                        case 'Armada':
+                            this.armadaPares -= parseInt(dataObj.pares, 10);
+                            break;
+                        case 'Costura':
+                            this.costuraPares -= parseInt(dataObj.pares, 10);
+                            break;
+                        case 'Montada':
+                            this.montadaPares -= parseInt(dataObj.pares, 10);
+                            break;
+                        case 'Emplantillado':
+                            this.emplantilladoPares -= parseInt(dataObj.pares, 10);
+                            break;
+                        default:
+                            break;
                     }
                 }
                 // Elimina el documento
@@ -399,12 +407,12 @@ export default {
                     this.ticketDivs.splice(index, 1);
                 }
 
-                // Actualiza los totales de pares después de eliminar el ticket
-                this.actualizarTotalesPares();
+                // No es necesario llamar a this.actualizarTotalesPares() aquí, ya que los totales se actualizan directamente arriba
             } catch (error) {
                 console.error("Error al eliminar el documento:", error);
             }
         },
+
 
         actualizarTotalesPares() {
             // Esta función actualiza los totales de pares para los diferentes procesos
